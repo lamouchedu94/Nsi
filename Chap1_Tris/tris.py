@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 import math
 
 def tri_bulles(liste):
@@ -24,7 +17,7 @@ def tri_bulles(liste):
         nb_tries+=1
     return None
 
-def tri_selec(liste):
+def tri_selecCorrige(liste):
     """
     paramètre: liste de nombres
     retourne: copie triée de la liste passée en paramètre en utilisant l'algorithme du tri par selection
@@ -44,7 +37,7 @@ def tri_selec(liste):
         
     return triee
 
-
+'''
 def tri_selec2(liste):
     """
     paramètre: liste de nombres
@@ -72,41 +65,18 @@ def tri_selec2(liste):
         lastmin=mini
         
     return triee
-
-
-def tri_selec3(liste):
-    """
-    paramètre: liste de nombres
-    retourne: copie triée de la liste passée en paramètre en utilisant l'algorithme du tri par selection
-    """
-    triee=[]
-    cpt=0
-    #lastmin=-math.inf
-    while liste!=[]:
-        mini=liste[0]
-        ind=0
-        for i in range(len(liste)):
-            if liste[i]<mini :
-                mini=liste[i]
-                ind = i
-        triee.append(mini)
-        liste.pop(ind)
-        
-    return triee
-
-            
-        
+'''
         
 
 l1=[1,2,3,4,5,6]
-print(tri_selec(l1))
+print(tri_selecCorrige(l1))
 print(l1)
 l2=[]
-print(tri_selec(l2))
+print(tri_selecCorrige(l2))
 print(l2)
 l3=[4,9,3,6,3,1,5]
-print(tri_selec(l3))
+print(tri_selecCorrige(l3))
 print(l3)
 l4=[2,5,1,9,3,6]
-print(tri_selec(l4))
+print(tri_selecCorrige(l4))
 print(l4)
