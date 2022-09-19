@@ -109,7 +109,7 @@ class Simulation():
         print(file.stock)
     '''
     def lancement(self):
-        arrive = [0,3,4,0]
+        arrive = [0,3,4,15]
         clients = File([Client(2,arrive[0]),Client(10,arrive[1]),Client(2,arrive[2]),Client(15,arrive[3])]) 
         #clients.longeur()
         caisse = Caisse(clients)
