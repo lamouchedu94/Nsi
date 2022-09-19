@@ -67,9 +67,6 @@ class Client():
     def plus_article(self) :
         return self.nb_article == 0 
 
-
-   
-
 class Caisse():
     """attributs: file d'attente, nbr article sur tapis
     methodes: init, nv_client appelé lorsque tapis vide: retire un client de la file et met ses articles sur le tapis
@@ -112,8 +109,8 @@ class Simulation():
         print(file.stock)
     '''
     def lancement(self):
-        arrive = [0,3,4,4]
-        clients = File([Client(2,arrive[0]),Client(5,arrive[1]),Client(2,arrive[2]),Client(15,arrive[3])]) 
+        arrive = [0,3,4,0]
+        clients = File([Client(2,arrive[0]),Client(10,arrive[1]),Client(2,arrive[2]),Client(15,arrive[3])]) 
         #clients.longeur()
         caisse = Caisse(clients)
         temps = 1
@@ -126,9 +123,8 @@ class Simulation():
                 print(temps-arrive[nb_client])
                 nb_client+= 1
             temps += 1 
-        self.temps_attente.append(temps - len(arrive)-1)
+        self.temps_attente.append(temps - (len(arrive)-1))
         print(self.temps_attente)
-        print("le temps d'ouverture de la caisse est de :",temps)
 
     def moyenne(self) :
         calc = 0
@@ -139,7 +135,7 @@ class Simulation():
 test = Simulation()
 #test.file_attente()
 test.lancement()
-print(test.moyenne())
+print("moyenne du temps d'attente :",test.moyenne())
 
 #1 attendu 0 à 2
 #2 attendu 3 à 13 = 10
