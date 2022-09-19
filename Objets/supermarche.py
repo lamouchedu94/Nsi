@@ -112,22 +112,35 @@ class Simulation():
         print(file.stock)
     '''
     def lancement(self):
-        arrive = [0,3,4]
-        clients = File([Client(2,arrive[0]),Client(10,arrive[1]),Client(2,arrive[2])]) 
+        arrive = [0,3,4,4]
+        clients = File([Client(2,arrive[0]),Client(5,arrive[1]),Client(2,arrive[2]),Client(15,arrive[3])]) 
         #clients.longeur()
         caisse = Caisse(clients)
-        temps = 0
+        temps = 1
         caisse.pas(temps)
         nb_client = 0
+        self.temps_attente = []
         while clients.longeur() != 0 :
             if caisse.pas(temps) :
-                print(temps)
+                self.temps_attente.append(temps-arrive[nb_client])
+                print(temps-arrive[nb_client])
                 nb_client+= 1
-            temps += 1  
-        
-        print("le temps d'attente total est de :",temps)
+            temps += 1 
+        self.temps_attente.append(temps - len(arrive)-1)
+        print(self.temps_attente)
+        print("le temps d'ouverture de la caisse est de :",temps)
+
+    def moyenne(self) :
+        calc = 0
+        for i in range(len(self.temps_attente)):
+            calc += self.temps_attente[i]
+        return calc / len(self.temps_attente)
+
 test = Simulation()
 #test.file_attente()
 test.lancement()
+print(test.moyenne())
 
-
+#1 attendu 0 à 2
+#2 attendu 3 à 13 = 10
+#3 attendu 4 à 15 = 11
