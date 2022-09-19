@@ -102,14 +102,14 @@ class Simulation():
     def __init__(self):
         self.nb_caisse = 1
         self.pas = 0 
-    
+    '''
     def file_attente(self) :
         file = File()
         for i in range(10) :
             file.enfile(i)
         
         print(file.stock)
-
+    '''
     def lancement(self):
         caisse = Caisse(File([Client(2,0),Client(10,3),Client(2,4)]) )
         temps = 0
