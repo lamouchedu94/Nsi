@@ -1,6 +1,3 @@
-from tempfile import tempdir
-
-
 class Pile:
    
     def __init__(self, stock=None):
@@ -28,7 +25,10 @@ class File:
         self.entree = Pile(stock_entree)
         self.sortie = Pile()
         return None
-   
+    
+    def longeur(self) :
+        return len(self.sortie.stock) 
+
     def enfile(self, val):
         self.entree.empile(val)
         return None
@@ -83,17 +83,18 @@ class Caisse():
 
     def nv_client(self):
         print("Nouveau client encaissé")
-        return self.clients.defile()
+        return self.clients.defile() 
 
-    def pas(self):
+    def pas(self, temps):
         if self.client_encaisse == None:
             self.client_encaisse = self.nv_client()
             self.tapis = self.client_encaisse.nb_article
         if self.tapis==0:
             self.client_encaisse = None
+            return True
         else :
             self.tapis -= 1
-
+        return False
    
 
 class Simulation():
@@ -111,12 +112,20 @@ class Simulation():
         print(file.stock)
     '''
     def lancement(self):
-        caisse = Caisse(File([Client(2,0),Client(10,3),Client(2,4)]) )
+        arrive = [0,3,4]
+        clients = File([Client(2,arrive[0]),Client(10,arrive[1]),Client(2,arrive[2])]) 
+        #clients.longeur()
+        caisse = Caisse(clients)
         temps = 0
-        for i in range(16):
-            caisse.pas()
-            temps += 1 
-
+        caisse.pas(temps)
+        nb_client = 0
+        while clients.longeur() != 0 :
+            if caisse.pas(temps) :
+                print(temps)
+                nb_client+= 1
+            temps += 1  
+        
+        print("le temps d'attente total est de :",temps)
 test = Simulation()
 #test.file_attente()
 test.lancement()
