@@ -1,8 +1,5 @@
-from pydoc import cli
 import random
-from re import T
-import re
-from traceback import print_tb
+
 class Pile:
    
     def __init__(self, stock=None):
