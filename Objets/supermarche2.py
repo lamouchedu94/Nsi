@@ -1,3 +1,4 @@
+from pydoc import cli
 import random
 class Pile:
    
@@ -73,12 +74,13 @@ class Caisse :
         if self.tapis == 0 :
             return True
         return False 
-    def noveau_client(self):
+    def noveau_client(self, client):
+        self.client = client
         if self.tapis_vide() :
             self.tapis = self.client.nombre_article()
-            self.client.encaisse()         
-
-
+            self.client.encaisse()
+    def avancement(self):
+        self.tapis -= 1 
 
 
 class Simulation :
@@ -107,14 +109,11 @@ class Simulation :
         while True :
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide() :
-                    self.caisse_libre[i] = True
-                else : 
-                    self.caisse_libre[i] = False
-            
-            for i in range(self.nb_caisse)
+                    self.caisse[i].noveau_client(self.file.defile())
+                    break
 
             pas += 1         
 
 
-tests = Simulation(2,1,1)
+tests = Simulation(2,1,100)
 tests.lancement()
