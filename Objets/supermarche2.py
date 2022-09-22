@@ -1,6 +1,8 @@
 from pydoc import cli
 import random
 from re import T
+import re
+from traceback import print_tb
 class Pile:
    
     def __init__(self, stock=None):
@@ -109,9 +111,10 @@ class Caisse :
 
 
 class Simulation :
-    def __init__(self, nb_caisse = 1, nb_client = 1, max_article = 1) :
+    def __init__(self, nb_caisse = 1, nb_client = 1, min_article = 1 ,max_article = 1) :
         self.nb_caisse = nb_caisse
         self.nb_client = nb_client
+        self.min_article = min_article
         self.max_article = max_article
         self.caisse_libre = [False for i in range(self.nb_caisse)]
     
@@ -121,7 +124,7 @@ class Simulation :
         return None
 
     def initialisation_client(self):
-        self.file = File([Client(random.randint(0, self.max_article)) for i in range(self.nb_client)])
+        self.file = File([Client(random.randint(self.min_article, self.max_article)) for i in range(self.nb_client)])
         return None
 
 
@@ -130,14 +133,13 @@ class Simulation :
         i = 0
         self.initialisation_client()
         self.initialisation_caisse()
-        tempstot = []
         val = False 
 
         while not val :
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide() and not self.file.est_vide():
                     self.caisse[i].noveau_client(self.file.defile())        
-                    print(f"nouveau client en caisse {i}")
+                    #print(f"nouveau client en caisse {i}")
                       
             for i in range(self.nb_caisse) :
                 self.caisse[i].avancement()
@@ -151,12 +153,18 @@ class Simulation :
             for libre in self.caisse_libre :
                 val = val and libre
             pas += 1
+        res = 0
         for i in range(self.nb_caisse):
-            print(self.caisse[i].temps_caisse())
+            tabtemps = self.caisse[i].temps_caisse()
+            for i in range(len(tabtemps)):
+                res += tabtemps[i]
+            
+        res = res/len(tabtemps)
+        print("le temps moyen d'attente est : ", round(res, 2))
 
         
         print("fini")         
 
-
-tests = Simulation(3,3,10)
+# Nb Caisse, Nb Client, Min article, Max article 
+tests = Simulation(3,10,10,10)
 tests.lancement()
