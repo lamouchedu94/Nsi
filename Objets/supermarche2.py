@@ -1,5 +1,6 @@
 from pydoc import cli
 import random
+from re import T
 class Pile:
    
     def __init__(self, stock=None):
@@ -73,7 +74,7 @@ class Caisse :
         self.tapis = 0 
         #self.client = client 
     def tapis_vide(self) :
-        if self.tapis == 0 :
+        if self.tapis <= 0 :
             return True
         return False 
     def noveau_client(self, client):
@@ -83,7 +84,10 @@ class Caisse :
             self.client.encaisse()
     def avancement(self):
         print(self.tapis)
-        self.tapis -= 1 
+        if not self.tapis_vide() :
+            self.tapis -= 1 
+    def nb_article(self):
+        return self.tapis
 
 
 class Simulation :
@@ -108,19 +112,34 @@ class Simulation :
         i = 0
         self.initialisation_client()
         self.initialisation_caisse()
+        last = False
+        test = 0 
+        val = False 
 
-        while not self.file.est_vide() :
+        while not val :
             for i in range(self.nb_caisse):
-                if self.caisse[i].tapis_vide() :
+                if self.caisse[i].tapis_vide() and not self.file.est_vide():
                     self.caisse[i].noveau_client(self.file.defile())
+                    
                     print(f"nouveau client en caisse {i}")
+                    if self.file.est_vide() :
+                        test = self.caisse[i].nb_article()
+                        last = True               
             for i in range(self.nb_caisse) :
                 self.caisse[i].avancement()
-                   
-            
+            if last :
+                test -= 1 
+            for i in range(self.nb_caisse):
+                if self.caisse[i].tapis_vide():
+                    self.caisse_libre[i] = True
+                else :
+                    self.caisse_libre[i] = False
+            val = True
+            for libre in self.caisse_libre :
+                val = val and libre
+            pas += 1
+        print("fini")         
 
-            pas += 1         
 
-
-tests = Simulation(1,2,10)
+tests = Simulation(2,3,10)
 tests.lancement()
