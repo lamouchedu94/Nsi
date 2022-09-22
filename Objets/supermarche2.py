@@ -63,29 +63,47 @@ class Client:
     def nombre_article(self):
         return self.articles
 
-    def encaisse(self, ):
-        pass
+    def temps_total(self):
+        return self.duree_attente
+
+    def encaisse(self):
+        self.duree_attente += 1
+
+        
 
 class Caisse :
     """attributs: file d'attente, nbr article sur tapis
     methodes: init, nv_client appelé lorsque tapis vide: retire un client de la file et met ses articles sur le tapis
     pas: appelle a chaque pas de la simulation et retire un article du tapis s'il n'est pas vide et appelle un client sinon"""
-    def __init__(self):
+    def __init__(self,):
         self.tapis = 0 
-        #self.client = client 
+        self.client = None
+        self.tempstot = []
+    
+    def temps_caisse(self):
+        if self.tapis <= 0 :
+            if self.client != None :
+                self.tempstot.append(self.client.temps_total())
+        return self.tempstot
+    
     def tapis_vide(self) :
         if self.tapis <= 0 :
+
             return True
         return False 
-    def noveau_client(self, client):
+    
+    def noveau_client(self, client ):
+        self.temps_caisse()
         self.client = client
         if self.tapis_vide() :
             self.tapis = self.client.nombre_article()
             self.client.encaisse()
+    
     def avancement(self):
-        print(self.tapis)
         if not self.tapis_vide() :
-            self.tapis -= 1 
+            self.client.encaisse()
+            self.tapis -= 1        
+    
     def nb_article(self):
         return self.tapis
 
@@ -112,23 +130,18 @@ class Simulation :
         i = 0
         self.initialisation_client()
         self.initialisation_caisse()
-        last = False
-        test = 0 
+        tempstot = []
         val = False 
 
         while not val :
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide() and not self.file.est_vide():
-                    self.caisse[i].noveau_client(self.file.defile())
-                    
+                    self.caisse[i].noveau_client(self.file.defile())        
                     print(f"nouveau client en caisse {i}")
-                    if self.file.est_vide() :
-                        test = self.caisse[i].nb_article()
-                        last = True               
+                      
             for i in range(self.nb_caisse) :
                 self.caisse[i].avancement()
-            if last :
-                test -= 1 
+            
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide():
                     self.caisse_libre[i] = True
@@ -138,8 +151,12 @@ class Simulation :
             for libre in self.caisse_libre :
                 val = val and libre
             pas += 1
+        for i in range(self.nb_caisse):
+            print(self.caisse[i].temps_caisse())
+
+        
         print("fini")         
 
 
-tests = Simulation(2,3,10)
+tests = Simulation(3,3,10)
 tests.lancement()
