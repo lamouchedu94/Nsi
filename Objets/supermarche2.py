@@ -43,7 +43,9 @@ class File:
     def defile(self):
         if self.sortie.est_vide():
             self._entree_dans_sortie()
-        assert not self.sortie.est_vide(), 'La file est vide'
+        if self.sortie.est_vide() :
+            return None
+        #assert not self.sortie.est_vide(), 'La file est vide'
         return self.sortie.depile()
    
     def est_vide(self):
@@ -80,6 +82,7 @@ class Caisse :
             self.tapis = self.client.nombre_article()
             self.client.encaisse()
     def avancement(self):
+        print(self.tapis)
         self.tapis -= 1 
 
 
@@ -102,18 +105,22 @@ class Simulation :
 
     def lancement(self) :
         pas = 0
-
+        i = 0
         self.initialisation_client()
         self.initialisation_caisse()
 
-        while True :
+        while not self.file.est_vide() :
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide() :
                     self.caisse[i].noveau_client(self.file.defile())
-                    break
+                    print(f"nouveau client en caisse {i}")
+            for i in range(self.nb_caisse) :
+                self.caisse[i].avancement()
+                   
+            
 
             pas += 1         
 
 
-tests = Simulation(2,1,100)
+tests = Simulation(1,2,10)
 tests.lancement()
