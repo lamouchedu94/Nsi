@@ -130,9 +130,9 @@ class Simulation :
         i = 0
         self.initialisation_client()
         self.initialisation_caisse()
-        val = False 
+        caisse_vide = False 
 
-        while not val :
+        while not caisse_vide :
             for i in range(self.nb_caisse):
                 if self.caisse[i].tapis_vide() and not self.file.est_vide():
                     self.caisse[i].noveau_client(self.file.defile())        
@@ -146,9 +146,9 @@ class Simulation :
                     self.caisse_libre[i] = True
                 else :
                     self.caisse_libre[i] = False
-            val = True
+            caisse_vide = True
             for libre in self.caisse_libre :
-                val = val and libre
+                caisse_vide = caisse_vide and libre
             pas += 1
         res = 0
         for i in range(self.nb_caisse):
@@ -158,10 +158,18 @@ class Simulation :
             
         res = res/len(tabtemps)
         print("le temps moyen d'attente est : ", round(res, 2))
+         
+ 
+client = 3
+caisse = 3
+min_article = 5
+max_article = 10
+tests = Simulation(caisse,client,min_article,max_article)
+# Nb Caisse, Nb Client, Min article, Max article
+#tests = Simulation(3,10,10,10)
 
-        
-        print("fini")         
+print(f"nombre client : {client}")
+print(f"nombre caisse : {caisse}")
+print(f"article min/max : {min_article}/{max_article}")
 
-# Nb Caisse, Nb Client, Min article, Max article 
-tests = Simulation(3,10,10,10)
 tests.lancement()
