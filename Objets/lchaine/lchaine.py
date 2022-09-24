@@ -45,21 +45,25 @@ class Liste:
         for i in range(len(self)-1):
             current = current.suiv
         current.suiv = Maillon(val, None)
+        return None
         
     def pop(self, key ):
+        if key == None :
+            key = len(self)
         current = self.tete
         for i in range(key-1) :
             current = current.suiv
-        print(current.val)
         temp = current.suiv
-        current = temp.suiv
-
+        val = temp.val
+        current.suiv = temp.suiv
+        return val
 
     def __setitem__(self, key, val):
         current = self.tete
         for i in range(key) :
             current = current.suiv
         current.val = val
+        return None
 
 l = Liste()
 '''
@@ -69,10 +73,11 @@ l.prepend(3)
 print(len(l))
 print(l[2])
 '''
+l.prepend(1)
 l.prepend(2)
 l.prepend(3)
-print(l)
-l.append(1)
+l.prepend(4)
+
 l[1] = 10
 l.pop(1)
 print(l)
