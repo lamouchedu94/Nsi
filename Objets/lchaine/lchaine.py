@@ -79,5 +79,5 @@ l.prepend(3)
 l.prepend(4)
 
 l[1] = 10
-l.pop(1)
+l.pop(0)
 print(l)
