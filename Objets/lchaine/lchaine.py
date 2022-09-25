@@ -47,10 +47,17 @@ class Liste:
         current.suiv = Maillon(val, None)
         return None
         
-    def pop(self, key ):
+    def pop(self, key):
         if key == None :
             key = len(self)
         current = self.tete
+        
+        if key == 0 :
+            #temp = self.tete.suiv
+            val= self.tete.val
+            self.tete = self.tete.suiv
+            return val
+        
         for i in range(key-1) :
             current = current.suiv
         temp = current.suiv
@@ -77,7 +84,7 @@ l.prepend(1)
 l.prepend(2)
 l.prepend(3)
 l.prepend(4)
-
+print(l )
 l[1] = 10
 l.pop(0)
 print(l)
