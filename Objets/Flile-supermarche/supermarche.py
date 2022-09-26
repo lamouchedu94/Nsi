@@ -70,7 +70,7 @@ class Client():
 class Caisse():
     """attributs: file d'attente, nbr article sur tapis
     methodes: init, nv_client appelé lorsque tapis vide: retire un client de la file et met ses articles sur le tapis
-    pas: appelle a chaque pas de la simulation et retire un article du tapis s'il n'est pas vide et appelle un client sinon"""
+    pas: appelle a chaque pas de la simulation et retire un article du tapis s'il n'est pas vide et appelle un client sinon"""  
     def __init__(self,clients=None):
         if clients is None:
             clients = File()
