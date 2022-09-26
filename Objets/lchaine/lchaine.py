@@ -1,3 +1,5 @@
+from graphlib import CycleError
+from re import A
 import time
 
 class Maillon:
@@ -91,15 +93,16 @@ class Liste:
             current = current.suiv
         current.val = val
         return None
- 
+
     def reverse(self):
-        res = ""
-        for i in range(len(self)-1,-1,-1):
-            res += str(self[i])
-        for j in range(len(res)):
-            self[j] = int(res[j]) 
+        current = self.tete
+        long = len(self)
+        self.tete = None
+        for i in range(long):
+            self.prepend(current.val)
+            current = current.suiv
         return None
- 
+
     def sort(self):
         pass
  
@@ -128,8 +131,9 @@ class Liste:
         return res 
  
 deb = time.time()
-liste = [i for i in range(1,11)]
-l = Liste(liste)
+l = Liste([i for i in range(1,10)])
 l.reverse()
-
+print(l)
 print(time.time()-deb)
+
+#100000 0.46s 
