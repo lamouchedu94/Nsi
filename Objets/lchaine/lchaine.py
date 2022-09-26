@@ -1,5 +1,3 @@
-from graphlib import CycleError
-from re import A
 import time
 
 class Maillon:
@@ -36,7 +34,7 @@ class Liste:
         return i
  
     def __getitem__(self,ind):
-        assert ind < len(l), "list index out of range"
+        assert ind <= len(self), "list index out of range"
         curent = self.tete
         for i in range(ind) :
             curent = curent.suiv
@@ -69,7 +67,8 @@ class Liste:
         if key == None :
             key = len(self)
         current = self.tete
-        assert key >= len(self), "out of range"
+        e = len(self)
+        assert key < len(self), "out of range"
         if key == 0 :
             #temp = self.tete.suiv
             val= self.tete.val
@@ -129,11 +128,51 @@ class Liste:
         for i in range(len(self)-1, -1, -1):
             res.prepend(self[i]) 
         return res 
- 
+
+
+class Enssemble :
+    def __init__(self) :
+        self.stock = Liste()
+    
+    def est_vide(self):
+        return self.stock.est_vide()
+    
+    def add(self, val):
+        for i in range(len(self.stock)) :
+            if self.stock[i] == val :       
+                return None
+        self.stock.append(val)
+        return None
+
+    def discard(self, val):
+        if len(self.stock) == 1 :
+            if self.stock[0] == val :
+                self.stock.pop(0)
+        for i in range(len(self.stock)-1):
+            if self.stock[i] == val :
+                self.stock.pop(i)
+        return None
+    def __str__(self):
+        return self.stock.__str__()
+   
+test = Enssemble()
+test.add(1)
+test.add(2)
+test.add(2)
+test.add(3)
+print(test)
+test.discard(1)
+test.discard(2)
+test.discard(3)
+print(test)
+
+
 deb = time.time()
-l = Liste([i for i in range(1,10)])
+l = Liste([i for i in range(0,10)])
 l.reverse()
+l.pop(0)
 print(l)
 print(time.time()-deb)
 
 #100000 0.46s 
+
