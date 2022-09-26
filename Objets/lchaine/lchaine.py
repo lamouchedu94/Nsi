@@ -1,3 +1,5 @@
+import time
+
 class Maillon:
     def __init__(self, val, suiv):
         self.val=val
@@ -94,7 +96,6 @@ class Liste:
         res = ""
         for i in range(len(self)-1,-1,-1):
             res += str(self[i])
-        print(res)
         for j in range(len(res)):
             self[j] = int(res[j]) 
         return None
@@ -126,12 +127,9 @@ class Liste:
             res.prepend(self[i]) 
         return res 
  
- 
-l = Liste([1,2,3])
- 
-print(l+[18,19])
-#print(l.slicer(0,2))
-#l.pop()
-print(l)
+deb = time.time()
+liste = [i for i in range(1,11)]
+l = Liste(liste)
 l.reverse()
-print(l)
+
+print(time.time()-deb)
