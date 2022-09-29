@@ -175,4 +175,4 @@ print(l)
 print(time.time()-deb)
 
 #100000 0.46s 
-
+#juste test
