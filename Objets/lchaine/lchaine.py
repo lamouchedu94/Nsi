@@ -202,7 +202,12 @@ class Ensemble :
         for i in range(len(ens.stock)):
             res.add(ens.stock[i])
         return res
- 
+
+class Dico :
+    def __init__(self) -> None:
+        pass
+
+
 ensemble1 = Ensemble()
 ensemble1.add(2)
 ensemble1.add(3)
