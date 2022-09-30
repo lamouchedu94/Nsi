@@ -203,50 +203,48 @@ class Ensemble :
             res.add(ens.stock[i])
         return res
 
-class Dico :
-    def __init__(self) -> None:
-        pass
 
-
-ensemble1 = Ensemble()
-ensemble1.add(2)
-ensemble1.add(3)
-ensemble1.add(4)
-ensemble1.add(5)
-#ensemble1 = {2,3,4,5}
- 
-ens2 = Ensemble()
-ens2.add(1)
-ens2.add(2)
-ens2.add(3)
-#ens2 = {1,2,3}
- 
-ens3 = Ensemble()
-ens3.add(2)
-ens3.add(3)
-ens3.add(4)
- 
-test = Ensemble()
-test.add(1)
-test.add(2)
-print("1 len doit afficher 2 :",len(test))
-test.add(2)
-test.add(3)
-print("2 in doit afficher True :",3 in test)
-print("3 in doit afficher False :",5 in test)
-print("4 eq Doit afficher True :",test == ens2)
-print("5 & Dois afficher {2,3} :",test & ens3)
-print("6 | Dois afficher {1,2,3,4,5}", test | ensemble1)
- 
- 
-print("7 len doit afficher 3 :",len(test))
-test.discard(1)
-test.discard(42)
-test.discard(2)
-test.discard(3)
-print("8 len doit afficher 0 :",len(test))
-print("9 eq Doit afficher False :",test == ensemble1)
-ensemble1.discard(3)
-print("10 | Dois afficher {2,4,5}", test | ensemble1)
- 
-print("11 eq Doit afficher False:",test == ens2)
+def testEnssemble() :
+    ensemble1 = Ensemble()
+    ensemble1.add(2)
+    ensemble1.add(3)
+    ensemble1.add(4)
+    ensemble1.add(5)
+    #ensemble1 = {2,3,4,5}
+    
+    ens2 = Ensemble()
+    ens2.add(1)
+    ens2.add(2)
+    ens2.add(3)
+    #ens2 = {1,2,3}
+    
+    ens3 = Ensemble()
+    ens3.add(2)
+    ens3.add(3)
+    ens3.add(4)
+    
+    test = Ensemble()
+    test.add(1)
+    test.add(2)
+    print("1 len doit afficher 2 :",len(test))
+    test.add(2)
+    test.add(3)
+    print("2 in doit afficher True :",3 in test)
+    print("3 in doit afficher False :",5 in test)
+    print("4 eq Doit afficher True :",test == ens2)
+    print("5 & Dois afficher {2,3} :",test & ens3)
+    print("6 | Dois afficher {1,2,3,4,5}", test | ensemble1)
+    
+    
+    print("7 len doit afficher 3 :",len(test))
+    test.discard(1)
+    test.discard(42)
+    test.discard(2)
+    test.discard(3)
+    print("8 len doit afficher 0 :",len(test))
+    print("9 eq Doit afficher False :",test == ensemble1)
+    ensemble1.discard(3)
+    print("10 | Dois afficher {2,4,5}", test | ensemble1)
+    
+    print("11 eq Doit afficher False:",test == ens2)
+testEnssemble()
