@@ -294,7 +294,9 @@ print("vide Doit afficher True :",dico1.est_vide())
 dico1["a"] = "valeur"
 dico1["a"] = "valeur1"
 dico1["b"] = "val"
+dico1["ça marche"] = "oui"
 print(dico1["a"])
 print(dico1["b"])
+print(dico1["ça marche"])
 #print(dico1["c"])
 print(dico1.liste_celf())
