@@ -36,7 +36,6 @@ class Tabidir :
 
     def __str__(self) :
         res = ""
-        print(self.imin())
         for i in range(self.imin()*-1-1, -1 , -1):
             res += str(self.tabg[i]) + " "
         for val in self.tabd :
@@ -44,12 +43,22 @@ class Tabidir :
         return res
 
     def __len__(self):
-        pass
+        return self.imax() + self.imin() * -1 +1
 
+    def pop(self, i) :
+        if i < 0 :
+            assert i *-1 -1 > self.imin(), "index error"
+            res = self.tabg[i *-1 -1 ]
+            del self.tabg[i *-1 -1 ]
+            return res
+        assert i <= self.imax(), "index error"
+        res = self.tabd[i]
+        del self.tabd[i]
+        return res
 
 test = Tabidir()
+print(len(test))
 print(test)
-
 test.append(1)
 test.append(2)
 test.prepend(3)
@@ -59,4 +68,7 @@ print(test[-1])
 print(test[-2])
 #test[-2] = 10
 #test[1] = 11
+print(test)
+print(len(test))
+print(test.pop(1))
 print(test)
