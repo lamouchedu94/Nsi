@@ -35,12 +35,15 @@ class Tabidir :
         return None
 
     def __str__(self) :
-        res = ""
+        res = "["
         for i in range(self.imin()*-1-1, -1 , -1):
             res += str(self.tabg[i]) + " "
+        if len(self) != 0 :
+            if len(self.tabg) == 0 :
+                res += "]"
         for val in self.tabd :
             res += str(val) + " "
-        return res
+        return res + "]"
 
     def __len__(self):
         return self.imax() + self.imin() * -1 +1
@@ -66,8 +69,8 @@ test.prepend(4)
 print(test[1])
 print(test[-1])
 print(test[-2])
-#test[-2] = 10
-#test[1] = 11
+test[-2] = 10
+test[1] = 11
 print(test)
 print(len(test))
 print(test.pop(1))
