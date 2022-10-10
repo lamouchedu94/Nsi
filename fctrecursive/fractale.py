@@ -22,6 +22,7 @@ for i in range(3):
     fractale()
     turtle.right(120)
 
+
 """
 turtle.forward(600)
 turtle.right(120)
@@ -32,5 +33,4 @@ turtle.right(120)
 """
 
 turtle.update()	
- 
 turtle.done()
