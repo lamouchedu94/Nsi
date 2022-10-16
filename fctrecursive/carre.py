@@ -8,7 +8,7 @@ turtle.pendown()
 turtle.penup() 
 def carre3(n):
     turtle.speed(0)
-    if n <= 1 :
+    if n <= 3 :
         for i in range(4):
             turtle.forward(n)
             turtle.right(90)
