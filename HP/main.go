@@ -6,10 +6,22 @@ import (
 )
 
 func main() {
+
+	l1 := make([]int, 10000)
+	l2 := make([]int, 10000)
+	for i := 0; i < 10000; i++ {
+		l1[i] = i
+	}
+	i := 10000
+	for j := 0; j < 10000; j++ {
+		l2[j] = i
+		i++
+	}
+
+	//l1 := []int{2, 5, 7, 13, 64}
+	//l2 := []int{1, 3, 4, 11, 35, 52, 58, 61}
 	deb := time.Now()
-	l1 := []int{2, 5, 7, 13, 64}
-	l2 := []int{1, 3, 4, 11, 35, 52, 58, 61}
-	for i := 0; i < 300000; i++ {
+	for i := 0; i < 3000; i++ {
 		fusion(l1, l2)
 		//fmt.Println(fusion(l1, l2))
 	}
