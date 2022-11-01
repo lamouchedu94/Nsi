@@ -1,3 +1,5 @@
+import time
+
 class Case:
     def __init__(self, contenu):
         self.contenu = contenu
@@ -19,7 +21,6 @@ class Case:
         return self.contenu
 
     def est_finale(self):
-        print(self.contenu)
         return self.contenu == "O"
     """
     def depart(self,x,y):
@@ -70,40 +71,56 @@ class Voiture :
         dicodeplacement = {"z":-1,"s":1,"q":-1,"d":1}
         self.historique(commande)
         a = self.lastpos
+        
+        if commande == "s" and self.lastpos[len(self.lastpos)-1] == "z" :
+            self.lastpos.pop()
+        if commande == "z" and self.lastpos[len(self.lastpos)-1] == "s" :
+            self.lastpos.pop()
+
+        
         for commande in self.lastpos :
             if commande == "q" or commande == "d":
                 if carte(self.position[0],self.position[1]+dicodeplacement[commande]).est_vide():
                     #print("a")
-                    carte(self.position[0], self.position[1]).sors()
+                    if not carte(self.position[0], self.position[1]).est_finale():
+                        carte(self.position[0], self.position[1]).sors()
                     carte(self.position[0],self.position[1]+dicodeplacement[commande]).entre(self)
                     self.position = (self.position[0],self.position[1]+dicodeplacement[commande])
                 else :
                     self.lastpos = []
+                    return False
 
             if commande == "z" or commande == "s":
                 if carte(self.position[0]+dicodeplacement[commande],self.position[1]).est_vide():
                     #print("b")
-                    carte(self.position[0], self.position[1]).sors()
+                    if not carte(self.position[0], self.position[1]).est_finale():
+                        carte(self.position[0], self.position[1]).sors()
                     carte(self.position[0]+dicodeplacement[commande],self.position[1]).entre(self)
                     self.position = (self.position[0]+dicodeplacement[commande],self.position[1])
                 else :
                     self.lastpos = []
-        print(carte(self.position[0]-1, self.position[1]).test())
+                    return False
+        #print(carte(self.position[0]-1, self.position[1]).test())
+        
         if carte(self.position[0]-1, self.position[1]).est_finale():
             return True
         return False
+
 def jeu(x,y,nom_fichier):
     end = True
     c = Carte(nom_fichier)
     v = Voiture(x,y)
     print(c)
+    depart = time.time()
+    
     while end :
         command = input()
         fin = v.deplacement(command,c)
         if fin :
             end = False
         print(c)
+    print(f"temps réalisé : {round(time.time()-depart, 2)}s")
         
         
-
-jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
+jeu(-4,2,"Objets\CourseVoiture\\test.txt")
+#jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
