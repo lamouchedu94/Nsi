@@ -107,20 +107,30 @@ class Voiture :
         return False
 
 def jeu(x,y,nom_fichier):
-    end = True
-    c = Carte(nom_fichier)
-    v = Voiture(x,y)
-    print(c)
-    depart = time.time()
-    
-    while end :
-        command = input()
-        fin = v.deplacement(command,c)
-        if fin :
-            end = False
+    temps = []
+    utilistateur = True
+    while utilistateur :
+        end = True
+        c = Carte(nom_fichier)
+        v = Voiture(x,y)
         print(c)
-    print(f"temps réalisé : {round(time.time()-depart, 2)}s")
+        
+        depart = time.time()
+        
+        while end :
+            command = input()
+            fin = v.deplacement(command,c)
+            if fin :
+                end = False
+            print(c)
+        temps.append(round(time.time()-depart, 2))
+        for i in range(len(temps)-1):
+            print(f"temps {i} : {temps[i]} ")    
+        print(f"temps réalisé : {temps[len(temps)-1]}s")
+        print("rejouer ? (y or n)")
+        if input() == "n" :
+            utilistateur = False
         
         
-jeu(-4,2,"Objets\CourseVoiture\\test.txt")
+jeu(-4,2,"Objets/CourseVoiture/test.txt")
 #jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
