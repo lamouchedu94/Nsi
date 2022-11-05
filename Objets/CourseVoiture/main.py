@@ -76,7 +76,10 @@ class Voiture :
             self.lastpos.pop()
         if commande == "z" and self.lastpos[len(self.lastpos)-1] == "s" :
             self.lastpos.pop()
-
+        if commande == "q" and self.lastpos[len(self.lastpos)-1] == "d" :
+            self.lastpos.pop()
+        if commande == "d" and self.lastpos[len(self.lastpos)-1] == "q" :
+            self.lastpos.pop()
         
         for commande in self.lastpos :
             if commande == "q" or commande == "d":
@@ -132,5 +135,5 @@ def jeu(x,y,nom_fichier):
             utilistateur = False
         
         
-jeu(-4,2,"Objets/CourseVoiture/test.txt")
-#jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
+#jeu(-4,2,"Objets/CourseVoiture/test.txt")
+jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
