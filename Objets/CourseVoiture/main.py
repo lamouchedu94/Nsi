@@ -136,4 +136,5 @@ def jeu(x,y,nom_fichier):
         
         
 #jeu(-4,2,"Objets/CourseVoiture/test.txt")
-jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
+#jeu(-25,8,"Objets\CourseVoiture\circuit.txt")
+jeu(-19,8,"Objets/CourseVoiture/circuit2.txt")
