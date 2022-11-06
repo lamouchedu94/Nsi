@@ -131,7 +131,7 @@ def jeu(x,y,nom_fichier):
             print(f"temps {i} : {temps[i]} ")    
         print(f"temps réalisé : {temps[len(temps)-1]}s")
         print("rejouer ? (y or n)")
-        if input() == "n" :
+        if input() != "y" :
             utilistateur = False
         
         
