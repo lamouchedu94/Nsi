@@ -36,24 +36,7 @@ class Case:
     def __call__(self):
         return self.contenu
 
-class Carte:
-    def __init__(self, nom_fichier):
-        with open(nom_fichier) as carte:
-            self.circuit = [[Case(car) for car in ligne] for ligne in carte.readlines()]
-        return None
-    
-    def __str__(self):
-        res = ''
-        for i in range(len(self.circuit)):
-            for car in self.circuit[i] :
-                res += str(car)
-        return res
-    
-    def __repr__(self):
-        return str(self)
-    
-    def __call__(self, ligne, col):
-        return self.circuit[ligne][col]
+
 
 class Voiture : 
     def __init__(self, x_depart, y_depart):
@@ -126,6 +109,7 @@ def jeu(x,y,nom_fichier):
             if fin :
                 end = False
             print(c)
+        
         temps.append(round(time.time()-depart, 2))
         for i in range(len(temps)-1):
             print(f"temps {i} : {temps[i]} ")    
