@@ -59,12 +59,16 @@ class Voiture:
         dest=[self.position[0]+self.vecteur[0],self.position[1]+self.vecteur[1]]
         init=[self.position[0],self.position[1]]
         nb_pas=self.vecteur[0]*10
-        for t in range(nb_pas):
-            point=[int(t*0.1*init[0]+(1-t*0.1)*dest[0]),int(t*0.1*init[1]+(1-t*0.1)*dest[1])]
-            test = self.carte(point[0],point[1])
+        ancienne_position = init
+        for t in range(nb_pas,-1,-1 ):
+            
+            point=[int(t/nb_pas*init[0]+(1-t/nb_pas)*dest[0]),int(t/nb_pas*init[1]+(1-t/nb_pas)*dest[1])]
             if not self.carte(point[0],point[1]).est_vide() :
+                self.carte(self.position[0],self.position[1]).sort()
                 self.vecteur=[0,0]
-                self.position=[int((t-1)*0.1*init[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*init[1]+(2-t)*0.1*dest[1])]
+                self.position = ancienne_position
+                #self.position=[int((t-1)*0.1*init[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*init[1]+(2-t)*0.1*dest[1])]
+                self.carte(-dest[0],dest[1]).entre()
                 return None
         self.position=dest
         self.carte(-dest[0],dest[1]).entre()
@@ -72,16 +76,16 @@ class Voiture:
     def __str__(self):
         return str(self.vecteur)
 
+def prov():
+    carte=Carte('Objets\CourseVoiture\petit.txt')
 
-carte=Carte('Objets\CourseVoiture\petit.txt')
+    test = Voiture([-8,3],carte)
+    print()
+    for i in range(100):
+        
+        test.deplacement(input())
+        print(carte)
+        print(test)
 
-test = Voiture([-4,3],carte)
-print()
-for i in range(100):
-    
-    test.deplacement(input())
-    print(carte)
     print(test)
-
-print(test)
-
+prov()
