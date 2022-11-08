@@ -1,4 +1,3 @@
-
 class Case:
     def __init__(self,contenu):
         self.contenu=contenu
@@ -31,7 +30,16 @@ class Carte:
     def __init__(self, nom_fichier):
         with open(nom_fichier) as carte:
             self.circuit = [[Case(car) for car in ligne] for ligne in carte.readlines()]
+            
         return None
+    
+    def transp(self, tab):
+        res = [[None for i in range(len(tab))] for j in range(len(tab[0]))]
+        for i in range(len(tab)):
+            for j in range(len(tab[0])):
+                res[j][i]=tab[i][j]
+        return res
+    
     
     def __str__(self):
         res = ''
@@ -65,12 +73,12 @@ class Voiture:
         
         for t in range(nb_pas,-1,-1 ):
             
-            point=[int(t*0.1*init[0]+(1-t*0.1)*dest[0]),int(t*0.1*init[1]+(1-t*0.1)*dest[1])]
+            point=[int(t*0.1*dest[0]+(1-t*0.1)*dest[0]),int(t*0.1*dest[1]+(1-t*0.1)*dest[1])]
             if not self.carte(point[0],point[1]).est_vide() :
                 self.carte(init[0],init[1]).sort()
                 self.vecteur=[0,0]
                 
-                self.position=[int((t-1)*0.1*init[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*init[1]+(2-t)*0.1*dest[1])]
+                self.position=[int((t-1)*0.1*dest[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*dest[1]+(2-t)*0.1*dest[1])]
                 self.carte(-dest[0],dest[1]).entre()
                 return None
         self.carte(init[0],init[1]).sort()
@@ -81,10 +89,15 @@ class Voiture:
         return str(self.vecteur)
 
 
-carte=Carte('Objets\CourseVoiture\petit.txt')
+
+#print(transp([[1,2,3],[4,5,6]]))
+
+carte=Carte('petit.txt')
+test =[[1,2,3],[4,5,6]]
+carte.transp(test)
 
 test = Voiture([-8,10],carte)
-test2 = Voiture([-8,10],carte)
+test2 = Voiture([-10,10],carte)
 print(test2)
 test2.deplacement("z")
 print(test2)
@@ -102,4 +115,3 @@ for i in range(100):
     print(test)
 
 print(test)
-
