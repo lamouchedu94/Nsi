@@ -10,7 +10,10 @@ class Case:
     def entre(self):
         self.contenu="X"
         return None
-   
+    
+    def test(self):
+        self.contenu = "1"
+
     def sort(self):
         self.contenu=' '
         return None
@@ -52,7 +55,7 @@ class Voiture:
         self.vecteur=[0,0]
         self.touches={'z':[1,0],'s':[-1,0],'q':[0,-1],'d':[0,1]}
     def deplacement(self,touche='l'):
-        self.carte(self.position[0],self.position[1]).sort()
+        
         if touche in self.touches:
             self.vecteur[0]=self.vecteur[0]+self.touches[touche][0]
             self.vecteur[1]=self.vecteur[1]+self.touches[touche][1]
@@ -70,6 +73,7 @@ class Voiture:
                 self.position=[int((t-1)*0.1*init[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*init[1]+(2-t)*0.1*dest[1])]
                 self.carte(-dest[0],dest[1]).entre()
                 return None
+        self.carte(init[0],init[1]).sort()
         self.position=dest
         self.carte(-dest[0],dest[1]).entre()
         return None
@@ -79,7 +83,7 @@ class Voiture:
 def prov():
     carte=Carte('Objets\CourseVoiture\petit.txt')
 
-    test = Voiture([-8,3],carte)
+    test = Voiture([-8,10],carte)
     print()
     for i in range(100):
         
