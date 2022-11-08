@@ -80,16 +80,26 @@ class Voiture:
     def __str__(self):
         return str(self.vecteur)
 
-def prov():
-    carte=Carte('Objets\CourseVoiture\petit.txt')
 
-    test = Voiture([-8,10],carte)
-    print()
-    for i in range(100):
+carte=Carte('Objets\CourseVoiture\petit.txt')
+
+test = Voiture([-8,10],carte)
+test2 = Voiture([-8,10],carte)
+print(test2)
+test2.deplacement("z")
+print(test2)
+test2.deplacement("d")
+print(test2)
+test2.deplacement("q")
+print(test2)
+test2.deplacement("s")
+print(test2)
+#Tests visuels :
+for i in range(100):
         
-        test.deplacement(input())
-        print(carte)
-        print(test)
-
+    test.deplacement(input())
+    print(carte)
     print(test)
-prov()
+
+print(test)
+
