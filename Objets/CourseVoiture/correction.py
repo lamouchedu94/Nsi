@@ -69,16 +69,17 @@ class Voiture:
             self.vecteur[1]=self.vecteur[1]+self.touches[touche][1]
         dest=[self.position[0]+self.vecteur[0],self.position[1]+self.vecteur[1]]
         init=[self.position[0],self.position[1]]
-        nb_pas=self.vecteur[0]*10
+        nb_pas=max(self.vecteur[0]*10,self.vecteur[1]*10)
         
-        for t in range(nb_pas,-1,-1 ):
+        for t in range(nb_pas):
             
-            point=[int(t*0.1*dest[0]+(1-t*0.1)*dest[0]),int(t*0.1*dest[1]+(1-t*0.1)*dest[1])]
+            point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
+            print(point)
             if not self.carte(point[0],point[1]).est_vide() :
                 self.carte(init[0],init[1]).sort()
                 self.vecteur=[0,0]
                 
-                self.position=[int((t-1)*0.1*dest[0]+(2-t)*0.1*dest[0]),int((t-1)*0.1*dest[1]+(2-t)*0.1*dest[1])]
+                self.position=[int((t-1)/nb_pas*dest[0]+(2-t)/nb_pas*dest[0]),int((t-1)/nb_pas*dest[1]+(2-t)/nb_pas*dest[1])]
                 self.carte(-dest[0],dest[1]).entre()
                 return None
         self.carte(init[0],init[1]).sort()
@@ -92,11 +93,12 @@ class Voiture:
 
 #print(transp([[1,2,3],[4,5,6]]))
 
-carte=Carte('petit.txt')
+carte=Carte('Objets/CourseVoiture/petit.txt')
 test =[[1,2,3],[4,5,6]]
 carte.transp(test)
 
-test = Voiture([-8,10],carte)
+test = Voiture([-4,10],carte)
+'''
 test2 = Voiture([-10,10],carte)
 print(test2)
 test2.deplacement("z")
@@ -107,11 +109,13 @@ test2.deplacement("q")
 print(test2)
 test2.deplacement("s")
 print(test2)
+'''
 #Tests visuels :
 for i in range(100):
         
     test.deplacement(input())
-    print(carte)
-    print(test)
+    #print(carte)
+    #print(test)
 
 print(test)
+
