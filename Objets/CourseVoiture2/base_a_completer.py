@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 11 20:56:25 2022
-
-@author: Laurent
-"""
-
 class Case:
     def __init__(self,contenu):
         self.cont=contenu
@@ -93,7 +86,6 @@ class Voiture:
         self.vecteur=[0,0]
         self.touches={'z':[-1,0],'s':[1,0],'q':[0,-1],'d':[0,1]}
         self.check=['0']
-        self.last = position
 
     def demande_deplacement(self,touche='l',nb_checkpoints=0):
         """en fonction de la touche donnée, et du vecteur, calcule un nouveau
@@ -110,7 +102,6 @@ class Voiture:
         if nb_checkpoints == int(self.check[0]) :
             return self.carte.plan[int(self.position[0]+1)][int(self.position[1])].est_finale()
         
-    
     def __str__(self):
         """renvoie une chaîne de caractère représentant le circuit et la voiture"""
         res = ''
@@ -119,10 +110,7 @@ class Voiture:
                 if i == self.position[0] and j == self.position[1]:
                     res+="X"
                 else : 
-                    res+=str(self.carte[i,j])
-                
-                
-        self.last = self.position
+                    res+=str(self.carte[i,j])                
         return res
 
 def jeu(fichier,depart,nb_checkpoints=0):
