@@ -121,7 +121,7 @@ class Voiture:
     def fini(self,nb_checkpoints=0):
         """retourne True si la voiture a franchi la ligne d'arrivée"""
         if nb_checkpoints == int(self.check[0]) :
-            return self.carte.plan[int(self.position[0])][int(self.position[1])].est_finale()
+            return self.carte.plan[int(self.position[0]+1)][int(self.position[1])].est_finale()
         
     
     def __str__(self):
