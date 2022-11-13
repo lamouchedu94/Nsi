@@ -8,6 +8,7 @@ Created on Fri Nov 11 20:56:25 2022
 class Case:
     def __init__(self,contenu):
         self.cont=contenu
+        self.last = ""
         return None
    
     def est_vide(self):
@@ -28,6 +29,15 @@ class Case:
     def contenu(self):
         return self.cont
 
+    def entre(self):
+        self.last = self.cont
+        self.cont = 'X'
+        return None
+    
+    def sort(self):
+        self.cont = self.last
+        
+        return None
 
 class Carte:
     def __init__(self,nomfichier):
@@ -65,14 +75,19 @@ class Carte:
         dest=[self.position[0]+self.vecteur[0],self.position[1]+self.vecteur[1]]
         init=[self.position[0],self.position[1]]
         nb_pas=max(abs(self.vecteur[0]*10),abs(self.vecteur[1]*10))
-        for t in range(nb_pas):
-            point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
-            if self.plan[point[0]][point[1]].contenu()=='#':
-                self.vecteur=[0,0]
-                self.position=[int((t-1)/nb_pas*dest[0]+(1-(t-1)/nb_pas)*init[0])+0.5,int((t-1)/nb_pas*dest[1]+(1-(t-1)/nb_pas)*init[1])+0.5]
-                return self.position,self.vecteur
+        if nb_pas != 0 :
+            for t in range(nb_pas+1):
+                point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
+                case = self.plan[point[0]][point[1]].contenu()
+                if len(case) != 0:
+                    if 48<ord(case)<57 :
+                        check[0]=case
+                if case =='#':
+                    self.vecteur=[0,0]
+                    self.position=[int((t-1)/nb_pas*dest[0]+(1-(t-1)/nb_pas)*init[0]),int((t-1)/nb_pas*dest[1]+(1-(t-1)/nb_pas)*init[1])]
+                    return self.position,self.vecteur,check
         
-        return dest, self.vecteur
+        return dest, self.vecteur, check
 
 
 '''
@@ -93,38 +108,25 @@ class Voiture:
         """en fonction de la touche donnée, et du vecteur, calcule un nouveau
         vecteur déplacement, puis appelle la méthode deplacement de Carte,
         pour mettre à jour position et vecteur"""
-        self.touche = touche
-        if touche in self.touche:
+        self.carte.plan[int(self.position[0])][int(self.position[1])].sort()
+        if touche in self.touches:
             self.vecteur[0]=self.vecteur[0]+self.touches[touche][0]
             self.vecteur[1]=self.vecteur[1]+self.touches[touche][1]
-        self.position,self.vecteur = self.carte.deplacement(self.position,self.vecteur)
-        print(self.position, self.vecteur)
+        self.position,self.vecteur, self.check = self.carte.deplacement(self.position,self.vecteur)
+        print(self.position, self.vecteur, self.check)
+        self.carte.plan[int(self.position[0])][int(self.position[1])].entre()
+        
         pass
     
     def fini(self,nb_checkpoints=0):
         """retourne True si la voiture a franchi la ligne d'arrivée"""
-        
-        return self.carte.plan[int(self.position[0])][int(self.position[1])].est_finale()
+        if nb_checkpoints == int(self.check[0]) :
+            return self.carte.plan[int(self.position[0])][int(self.position[1])].est_finale()
         
     
     def __str__(self):
         """renvoie une chaîne de caractère représentant le circuit et la voiture"""
         pass
-
-carte=Carte("Objets\CourseVoiture2\carte.txt")  
-v= Voiture([-11,3],carte)
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-v.demande_deplacement('d')
-print(carte)
-
-
-
 
 def jeu(fichier,depart,nb_checkpoints=0):
     """
@@ -134,15 +136,15 @@ def jeu(fichier,depart,nb_checkpoints=0):
     """
     carte=Carte(fichier)
     voit=Voiture(depart,carte)
-    print(voit)
+    print(carte)
     cpt=0
     while not voit.fini(nb_checkpoints):
         t=input('touche ? ')
         voit.demande_deplacement(t,nb_checkpoints)
         cpt+=1
-        print('vecteur:',voit.vecteur,'compteur',cpt)
-        print(voit)
+        print('vecteur:',voit.vecteur,'compteur',cpt, 'check:',voit.check)
+        print(carte)
     print('gagné en ',cpt,' coups !')
     return None
 
-#jeu("Objets\CourseVoiture2\carte.txt",[3,3],1)
+jeu("Objets\CourseVoiture2\carte.txt",[-11,3],3)
