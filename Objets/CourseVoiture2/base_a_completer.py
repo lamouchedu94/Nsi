@@ -27,8 +27,8 @@ class Case:
    
     def contenu(self):
         return self.cont
-           
-   
+
+
 class Carte:
     def __init__(self,nomfichier):
         with open (nomfichier) as carte:
@@ -60,8 +60,26 @@ class Carte:
         par vecteur.
         arguments: position: couple, vecteur: couple
         retourne: nouvelle position, vecteur si la voiture n'a pas rencontré de mur, [0,0] sinon"""
-        pass
- 
+        self.position = position
+        self.vecteur = vecteur
+        dest=[self.position[0]+self.vecteur[0],self.position[1]+self.vecteur[1]]
+        init=[self.position[0],self.position[1]]
+        nb_pas=max(abs(self.vecteur[0]*10),abs(self.vecteur[1]*10))
+        for t in range(nb_pas):
+            point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
+            if self.plan[point[0]][point[1]].contenu()=='#':
+                self.vecteur=[0,0]
+                self.position=[int((t-1)/nb_pas*dest[0]+(1-(t-1)/nb_pas)*init[0])+0.5,int((t-1)/nb_pas*dest[1]+(1-(t-1)/nb_pas)*init[1])+0.5]
+                return self.position,self.vecteur
+        
+        return dest, self.vecteur
+
+
+'''
+c = Carte("Objets\CourseVoiture2\carte.txt")
+print(c.deplacement([1,1], [1,0]))
+print(c.deplacement([2,1], [1,0]))
+'''
 
 class Voiture:
     def __init__(self,position,carte):
@@ -75,16 +93,39 @@ class Voiture:
         """en fonction de la touche donnée, et du vecteur, calcule un nouveau
         vecteur déplacement, puis appelle la méthode deplacement de Carte,
         pour mettre à jour position et vecteur"""
+        self.touche = touche
+        if touche in self.touche:
+            self.vecteur[0]=self.vecteur[0]+self.touches[touche][0]
+            self.vecteur[1]=self.vecteur[1]+self.touches[touche][1]
+        self.position,self.vecteur = self.carte.deplacement(self.position,self.vecteur)
+        print(self.position, self.vecteur)
         pass
     
     def fini(self,nb_checkpoints=0):
         """retourne True si la voiture a franchi la ligne d'arrivée"""
-        pass
+        
+        return self.carte.plan[int(self.position[0])][int(self.position[1])].est_finale()
+        
     
     def __str__(self):
         """renvoie une chaîne de caractère représentant le circuit et la voiture"""
         pass
-    
+
+carte=Carte("Objets\CourseVoiture2\carte.txt")  
+v= Voiture([-11,3],carte)
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+v.demande_deplacement('d')
+print(carte)
+
+
+
+
 def jeu(fichier,depart,nb_checkpoints=0):
     """
     paramètres: fichier est une chaine de caractères qui indique le chemin d'accès 
@@ -103,4 +144,5 @@ def jeu(fichier,depart,nb_checkpoints=0):
         print(voit)
     print('gagné en ',cpt,' coups !')
     return None
-    
+
+#jeu("Objets\CourseVoiture2\carte.txt",[3,3],1)
