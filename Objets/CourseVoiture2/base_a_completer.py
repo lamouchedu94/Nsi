@@ -29,16 +29,6 @@ class Case:
     def contenu(self):
         return self.cont
 
-    def entre(self):
-        self.last = self.cont
-        self.cont = 'X'
-        return None
-    
-    def sort(self):
-        self.cont = self.last
-        
-        return None
-
 class Carte:
     def __init__(self,nomfichier):
         with open (nomfichier) as carte:
@@ -76,7 +66,7 @@ class Carte:
         init=[self.position[0],self.position[1]]
         nb_pas=max(abs(self.vecteur[0]*10),abs(self.vecteur[1]*10))
         if nb_pas != 0 :
-            for t in range(nb_pas+1):
+            for t in range(nb_pas):
                 point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
                 case = self.plan[point[0]][point[1]].contenu()
                 if len(case) != 0:
@@ -103,20 +93,17 @@ class Voiture:
         self.vecteur=[0,0]
         self.touches={'z':[-1,0],'s':[1,0],'q':[0,-1],'d':[0,1]}
         self.check=['0']
-        
+        self.last = position
+
     def demande_deplacement(self,touche='l',nb_checkpoints=0):
         """en fonction de la touche donnée, et du vecteur, calcule un nouveau
         vecteur déplacement, puis appelle la méthode deplacement de Carte,
         pour mettre à jour position et vecteur"""
-        self.carte.plan[int(self.position[0])][int(self.position[1])].sort()
         if touche in self.touches:
             self.vecteur[0]=self.vecteur[0]+self.touches[touche][0]
             self.vecteur[1]=self.vecteur[1]+self.touches[touche][1]
-        self.position,self.vecteur, self.check = self.carte.deplacement(self.position,self.vecteur)
-        print(self.position, self.vecteur, self.check)
-        self.carte.plan[int(self.position[0])][int(self.position[1])].entre()
-        
-        pass
+        self.position,self.vecteur, self.check = self.carte.deplacement(self.position,self.vecteur)        
+        return None
     
     def fini(self,nb_checkpoints=0):
         """retourne True si la voiture a franchi la ligne d'arrivée"""
@@ -126,7 +113,17 @@ class Voiture:
     
     def __str__(self):
         """renvoie une chaîne de caractère représentant le circuit et la voiture"""
-        pass
+        res = ''
+        for i in range(len(self.carte)):
+            for j in range(self.carte.nb_colonnes()):
+                if i == self.position[0] and j == self.position[1]:
+                    res+="X"
+                else : 
+                    res+=str(self.carte[i,j])
+                
+                
+        self.last = self.position
+        return res
 
 def jeu(fichier,depart,nb_checkpoints=0):
     """
@@ -136,15 +133,15 @@ def jeu(fichier,depart,nb_checkpoints=0):
     """
     carte=Carte(fichier)
     voit=Voiture(depart,carte)
-    print(carte)
+    print(voit)
     cpt=0
     while not voit.fini(nb_checkpoints):
         t=input('touche ? ')
         voit.demande_deplacement(t,nb_checkpoints)
         cpt+=1
         print('vecteur:',voit.vecteur,'compteur',cpt, 'check:',voit.check)
-        print(carte)
+        print(voit)
     print('gagné en ',cpt,' coups !')
     return None
 
-jeu("Objets\CourseVoiture2\carte.txt",[-11,3],3)
+jeu("Objets\CourseVoiture2\carte.txt",[3,3],3)
