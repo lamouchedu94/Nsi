@@ -53,28 +53,24 @@ class Carte:
         par vecteur.
         arguments: position: couple, vecteur: couple
         retourne: nouvelle position, vecteur si la voiture n'a pas rencontré de mur, [0,0] sinon"""
-        self.position = position
-        self.vecteur = vecteur
-        dest=[self.position[0]+self.vecteur[0],self.position[1]+self.vecteur[1]]
-        init=[self.position[0],self.position[1]]
-        nb_pas=max(abs(self.vecteur[0]*10),abs(self.vecteur[1]*10))
-        if nb_pas != 0 :
-            for t in range(nb_pas):
-                point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
-                case = self.plan[point[0]][point[1]].contenu()
-                if len(case) != 0:
-                    if 48<ord(case)<57 :
-                        check[0]=case
-                if case =='#':
-                    self.vecteur=[0,0]
-                    self.position=[int((t-1)/nb_pas*dest[0]+(1-(t-1)/nb_pas)*init[0]),int((t-1)/nb_pas*dest[1]+(1-(t-1)/nb_pas)*init[1])]
-                    return self.position,self.vecteur,check
+        dest=[position[0]+vecteur[0],position[1]+vecteur[1]]
+        init=[position[0],position[1]]
+        nb_pas=max(abs(vecteur[0]*10),abs(vecteur[1]*10))
+        for t in range(nb_pas):
+            point=[int(t/nb_pas*dest[0]+(1-t/nb_pas)*init[0]),int(t/nb_pas*dest[1]+(1-t/nb_pas)*init[1])]
+            case = self.plan[point[0]][point[1]].contenu()
+            if 48<ord(case)<57 :
+                check[0]=case
+            elif case =='#':
+                vecteur=[0,0]
+                position=[int((t-1)/nb_pas*dest[0]+(1-(t-1)/nb_pas)*init[0]),int((t-1)/nb_pas*dest[1]+(1-(t-1)/nb_pas)*init[1])]
+                return position,vecteur,check
         
-        return dest, self.vecteur, check
+        return dest, vecteur, check
 
 
 '''
-c = Carte("Objets\CourseVoiture2\carte.txt")
+c = Carte("Objets\\CourseVoiture2\\carte.txt")
 print(c.deplacement([1,1], [1,0]))
 print(c.deplacement([2,1], [1,0]))
 '''
@@ -132,4 +128,4 @@ def jeu(fichier,depart,nb_checkpoints=0):
     print('gagné en ',cpt,' coups !')
     return None
 
-jeu("Objets\CourseVoiture2\carte.txt",[3,3],3)
+jeu("Objets//CourseVoiture2//carte.txt",[3,10],3)
