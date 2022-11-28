@@ -54,3 +54,43 @@ On dit alors que c'est une clef étrangère de la relation
  
 Contrainte Utilisateurs :
 - Ce sont toutes les contraintes d'une relation que l'on ne peut pas exprimer par les 3 précédentes.
+
+## II/Base de donnée 
+
+Avec l'invention du disque dur en 1956, par IBM (5mb) la capacité de stockage des ordinateurs augmente considérablement et n'est plus nécésairement séquentielle.
+Le terme database apparait en 1964 pour désigner une collection d'info partagé entre différents utilisateurs. Il existe différent moyens d'organiser les données
+le plus répendu = Bdd relationnelle qui sont une implémentation du model relationnel. Il existe d'autre types de base qui répondent é des besoins
+spécifiques comme les bases multidimentionnelle par ex. Avec l'explosion des capacité de stockage et du volume de donnée (web, big data...) les bases de données
+sont é présent des outils incontournables. 
+
+### A) Systeme de gestion de bases de données
+
+L'enssemble des opérations liées aux données (stockage, écrtiture, lecture, modification, droit d'accés...) se qui fait é l'aide d'un systéme de gestion de 
+base de donnée (appelé SGBD). Il existe différent SGBD, comerciaux (payant) Oracle, Microsoft Sql server... ou bien libre MariaDb, Sqlite, Postgrey Sql...
+Ils sont tous basés sur le méme langage : Structured Query Language (sql) mais les implémentations peuvent présenter des différences qui obligerai é 
+revoir le code en détail pour passer d'un systeme é l'autre. Il est é noter que l'utilisateur n'a aucun moyen de savoir comment les données sont stockées
+il ne peut que passer par l'intermédiaire du SGBD. Le SGBD propose un contrat é l'utilisateur qui lui garantit un certain nombre de fonctionnalités sans 
+rentrer dans le détail de l'implémentation. Un SGBD permet de :
+- Gerer la lecture, l'écriture ou la modification d'info contenues dans la Base de Donnée
+- Gerer les autorisations d'accés é la base de donnée
+- Gerer la duplication de la base de donnée faire en sorte que les fichiers soient placé é plusieurs endroits pour les sauvgarder
+- Assurer des accés concurent é la base de donnée (plusieurs utilisateurs peuvent l'utiliser en méme temps
+
+A titre d'exemple nous shouaiton modéliser un lycée simplifié. 2 classes de 3 éléves. Dans chaque classe 2 enseignement Science et Lettres et le lycée comporte 2 prof
+de science et 2 prof de lettre.
+
+1ére tentative : 
+Nom | Prenom | Classe | Nom_prof | Prenom_Prof | Matiére
+
+Pas solution satisfaisante plusieurs info répétées se qui rend le tableau peu lisible. De plus saisie trés compliquée augmentant le risque d'erreur sans compter
+la dificultée de certaines modifications (ex changement prof / éléve). D'une maniére générale,  on s'attachera é la création d'une BDD toute redondance de données.
+L'idée pour cela sera souvent de créer plusieurs table que l'on pourra mettre en relation les unes avec les autres. 
+
+### B) Représentation d'une BDD
+
+Une BDD relationnelle est l'implémentation d'un enssemble de relation. Une relation peut étre vue comme en tableau é deux dimenssions 
+
+Lors de la création d'une tables il faut définir leurs différents attributs et leurs domaines (cad le type de donnée stocké). Chaque enrengistrement est alors une 
+tuple, comportant autant d'éléments qu'il y a d'attribut dans la table du bon type. Une table ne peu contenir 2 enrengistrment identique, pour cela on définit 
+généralement une clef primaire. Une clef primaire est un atribut ou un groupe d'attribut dont la valeur permet d'identifier de maniére unique un enrengistrement de
+la table. Elle assure donc l'unicité des enrengistements de la table.
