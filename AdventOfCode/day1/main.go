@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -15,9 +16,14 @@ func main() {
 	//fmt.Println(tab)
 	//fmt.Println(calc(tab))
 	temp := calc(tab)
-	fmt.Println(len(temp))
+	sort.Ints(temp)
+	sum := 0
+	for i := 1; i <= 3; i++ {
+		sum += temp[len(temp)-i]
+	}
+	fmt.Printf("Le nb de calories de 3 luttins est : %d", sum)
 	max := findMaxElement(temp)
-	fmt.Printf("La valeur maximale est : %d", max)
+	fmt.Printf("\nLa valeur maximale est : %d", max)
 }
 
 func findMaxElement(arr []int) int {
@@ -69,6 +75,7 @@ func calc(tab []string) []int {
 	return res
 }
 
+/*
 func read1(path string) ([]int, error) {
 	var rep []int
 	var n []int
@@ -85,3 +92,4 @@ func read1(path string) ([]int, error) {
 	}
 	return n, err
 }
+*/
