@@ -17,20 +17,23 @@ func main() {
 	//fmt.Println(calc(tab))
 	temp := calc(tab)
 	sort.Ints(temp)
+
 	sum := 0
 	for i := 1; i <= 3; i++ {
 		sum += temp[len(temp)-i]
 	}
+	//exo 2
 	fmt.Printf("Le nb de calories de 3 luttins est : %d", sum)
-	max := findMaxElement(temp)
+	//exo 1
+	max := MaxElement(temp)
 	fmt.Printf("\nLa valeur maximale est : %d", max)
 }
 
-func findMaxElement(arr []int) int {
-	max_num := arr[0]
-	for i := 0; i < len(arr); i++ {
-		if arr[i] > max_num {
-			max_num = arr[i]
+func MaxElement(tab []int) int {
+	max_num := tab[0]
+	for i := 0; i < len(tab); i++ {
+		if tab[i] > max_num {
+			max_num = tab[i]
 		}
 	}
 	return max_num
@@ -54,7 +57,7 @@ func calc(tab []string) []int {
 	var val int
 	var err error
 	var temp int
-	for i, car := range tab {
+	for _, car := range tab {
 		if car != "" {
 			val, err = strconv.Atoi(car)
 			temp += val
@@ -63,9 +66,6 @@ func calc(tab []string) []int {
 			}
 		} else {
 			res = append(res, temp)
-			if temp == 82055 {
-				fmt.Println(i)
-			}
 			temp, val = 0, 0
 
 		}
