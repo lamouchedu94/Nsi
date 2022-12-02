@@ -94,3 +94,9 @@ Lors de la création d'une tables il faut définir leurs différents attributs e
 tuple, comportant autant d'éléments qu'il y a d'attribut dans la table du bon type. Une table ne peu contenir 2 enrengistrment identique, pour cela on définit 
 généralement une clef primaire. Une clef primaire est un atribut ou un groupe d'attribut dont la valeur permet d'identifier de maniére unique un enrengistrement de
 la table. Elle assure donc l'unicité des enrengistements de la table.
+
+### Quelques commandes sql
+
+- CREATE TABLE eleve (nom VARCHAR(255), classe INT, id SERIAL PRIMARY KEY);
+- CREATE TABLE matiere (intitule VARCHAR(255), id SERIAL PRIMARY KEY);
+- CREATE TABLE note (id_eleve INT REFERENCES eleve(id), id_matiere INT REFERENCES matiere(id), moyenne INT, PRIMARY KEY (id_eleve, id_matiere));
