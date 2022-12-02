@@ -22,11 +22,12 @@ func main() {
 	for i := 1; i <= 3; i++ {
 		sum += temp[len(temp)-i]
 	}
-	//exo 2
-	fmt.Printf("Le nb de calories de 3 luttins est : %d", sum)
 	//exo 1
 	max := MaxElement(temp)
-	fmt.Printf("\nLa valeur maximale est : %d", max)
+	fmt.Printf("La valeur maximale est : %d", max)
+	fmt.Println()
+	//exo 2
+	fmt.Printf("Le nb de calories de 3 luttins est : %d", sum)
 }
 
 func MaxElement(tab []int) int {
