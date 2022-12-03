@@ -69,6 +69,7 @@ func part1(tab []string) int {
 func read(path string) ([]string, error) {
 	var tab []string
 	file, err := os.Open(path)
+	defer file.Close()
 	test := bufio.NewScanner(file)
 	test.Split(bufio.ScanLines)
 
