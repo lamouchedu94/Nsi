@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -20,13 +19,15 @@ func main() {
 // [3 7]
 // [2 8]
 
-func run(tab []string) int {
-	var res int
-	for i := 0; i < len(tab); i += 2 {
-		grp1 := strings.Split(tab[i], "-")
-		grp2 := strings.Split(tab[i+1], "-")
+type team struct {
+	a, b, c, d int
+}
 
-		if (grp1[0] <= grp2[0] && grp1[1] >= grp2[1]) || (grp2[0] <= grp1[0] && grp2[1] >= grp1[1]) {
+func run(tab []team) int {
+	var res int
+
+	for _, t := range tab {
+		if (t.a <= t.c && t.d <= t.b) || (t.c <= t.a && t.b <= t.d) {
 			res += 1
 		}
 
@@ -36,8 +37,8 @@ func run(tab []string) int {
 	return res
 }
 
-func read(path string) ([]string, error) {
-	var tab []string
+func read(path string) ([]team, error) {
+	var tab []team
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -47,9 +48,10 @@ func read(path string) ([]string, error) {
 	test.Split(bufio.ScanLines)
 
 	for test.Scan() {
-		valsplit := strings.Split(test.Text(), ",")
-		tab = append(tab, valsplit...)
+		var t team
 
+		fmt.Sscanf(test.Text(), "%d-%d,%d-%d", &t.a, &t.b, &t.c, &t.d)
+		tab = append(tab, t)
 	}
 	return tab, err
 }
