@@ -100,3 +100,10 @@ la table. Elle assure donc l'unicité des enrengistements de la table.
 - CREATE TABLE eleve (nom VARCHAR(255), classe INT, id SERIAL PRIMARY KEY);
 - CREATE TABLE matiere (intitule VARCHAR(255), id SERIAL PRIMARY KEY);
 - CREATE TABLE note (id_eleve INT REFERENCES eleve(id), id_matiere INT REFERENCES matiere(id), moyenne INT, PRIMARY KEY (id_eleve, id_matiere));
+
+```sql
+select eleve.nom,eleve.prenom,note.moyenne,prof.nom,matiere.intitule from note
+join matiere on matiere.id = note.id_matiere
+join eleve on note.id_eleve = eleve.id
+join prof on prof.num_classe = eleve.classe and matiere.id = prof.id_matiere
+```
