@@ -11,9 +11,12 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(tab)
 	fmt.Println(tab[1])
-	fmt.Println(tab[0])
+	//fmt.Println(tab[0])
+}
+
+type instruct struct {
+	a, b, c int
 }
 
 func decoupage(line string, tab []string) []string {
@@ -36,6 +39,9 @@ func decoupage(line string, tab []string) []string {
 }
 func read(path string) ([]string, error) {
 	var tab []string
+	var tabinstruction []instruct
+	fin := true
+
 	//var colonne []string
 	for i := 0; i < 3; i++ {
 		temp := []string{""}
@@ -52,10 +58,18 @@ func read(path string) ([]string, error) {
 
 	for test.Scan() {
 		if test.Text() == " 1   2   3 " {
-			return tab, err
+			fin = false
+
 		}
-		tab = decoupage(test.Text(), tab)
-		tab = append(tab, test.Text())
+		if fin {
+			tab = decoupage(test.Text(), tab)
+			tab = append(tab, test.Text())
+		} else {
+
+			var ins instruct
+			fmt.Sscanf(test.Text(), "move %d from %d to %d", &ins.a, &ins.b, &ins.c)
+			tabinstruction = append(tabinstruction, ins)
+		}
 
 	}
 	return tab, err
