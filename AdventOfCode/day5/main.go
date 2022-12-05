@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	tab, tabinstruc, err := read("input1.txt")
+	tab, tabinstruc, err := read("input.txt")
 	_ = tabinstruc
 	if err != nil {
 		fmt.Println(err)
@@ -27,9 +27,8 @@ type instruct struct {
 // P DNZ
 
 func run(tab []string, tabinstruc []instruct) {
-	for k, t := range tabinstruc {
-		_ = k
-		for i := 0; i <= t.a; i++ {
+	for _, t := range tabinstruc {
+		for i := 0; i < t.a; i++ {
 			//bouge depuis le 2 de 0
 			var abouger string
 			if len(string(tab[t.b-1])) > 0 {
@@ -53,23 +52,17 @@ func run(tab []string, tabinstruc []instruct) {
 				}
 			}
 			tab[t.c-1] = abouger + temp
-			if len(tab[t.b-1]) == 0 {
-				tab[t.b-1] = tab[t.b-1][0:len(tab[t.b-1])]
-			} else {
-				tab[t.b-1] = tab[t.b-1][1:len(tab[t.b-1])]
-			}
-
-			fmt.Println(tab[0:9])
+			tab[t.b-1] = tab[t.b-1][1:len(tab[t.b-1])]
 
 		}
-
+		fmt.Println(tab)
 	}
 
 }
 
 func decoupage(line string, tab []string) []string {
 	j := 0
-	for i := 1; i < 35; i += 4 {
+	for i := 1; i < 12; i += 4 {
 		if string(line[i]) != " " {
 			tab[j] += string(line[i])
 		} else {
@@ -103,7 +96,7 @@ func read(path string) ([]string, []instruct, error) {
 	fin := true
 
 	//var colonne []string
-	for i := 0; i < 9; i++ {
+	for i := 0; i < 3; i++ {
 		temp := []string{""}
 		tab = append(tab, temp...)
 	}
@@ -117,13 +110,13 @@ func read(path string) ([]string, []instruct, error) {
 	test.Split(bufio.ScanLines)
 	for test.Scan() {
 
-		if test.Text() == " 1   2   3   4   5   6   7   8   9 " {
+		if test.Text() == " 1   2   3 " {
 			fin = false
 
 		}
 		if fin {
 			tab = decoupage(test.Text(), tab)
-			tab = append(tab, test.Text())
+			//tab = append(tab, test.Text())
 		} else {
 			line := test.Text()
 			m := instruct{}
