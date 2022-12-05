@@ -27,8 +27,9 @@ type instruct struct {
 // P DNZ
 
 func run(tab []string, tabinstruc []instruct) {
-	for _, t := range tabinstruc {
-		for i := 0; i < t.a; i++ {
+	for k, t := range tabinstruc {
+		_ = k
+		for i := 0; i <= t.a; i++ {
 			//bouge depuis le 2 de 0
 			var abouger string
 			if len(string(tab[t.b-1])) > 0 {
@@ -52,10 +53,16 @@ func run(tab []string, tabinstruc []instruct) {
 				}
 			}
 			tab[t.c-1] = abouger + temp
-			tab[t.b-1] = tab[t.b-1][1:len(tab[t.b-1])]
+			if len(tab[t.b-1]) == 0 {
+				tab[t.b-1] = tab[t.b-1][0:len(tab[t.b-1])]
+			} else {
+				tab[t.b-1] = tab[t.b-1][1:len(tab[t.b-1])]
+			}
 
 			fmt.Println(tab[0:9])
+
 		}
+
 	}
 
 }
