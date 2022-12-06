@@ -40,12 +40,6 @@ func run1(j jeux) {
 			j.quai[inst.de] = j.quai[inst.de][1:]
 			j.quai[inst.vers] = append(pile{abouger}, j.quai[inst.vers]...)
 		}
-		/*
-			for _, q := range j.quai {
-				fmt.Println(string(q))
-			}
-			fmt.Println()
-		*/
 	}
 	fmt.Print("Part 1 : ")
 	for _, q := range j.quai {
