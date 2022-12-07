@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 type folder []string
@@ -16,11 +17,31 @@ func main() {
 	}
 
 	fmt.Println(data)
-
+    run(data)
 }
 
 func run(tab []folder) int{
+	var nums []int
+	// /var tab_num []num
+	var temp string 
 
+    for _, t := range tab {
+		for _,num :=range t {
+			temp = ""
+			for _,car:= range num {
+				if car >='0' && car <= '9'{
+					temp=temp+string(car)
+				}else {
+					break
+				}
+				
+			}
+	n, _:= strconv.Atoi(temp)
+	nums = append(nums, n)
+	fmt.Println(nums)
+		}
+		//fmt.Println(t)
+	}
 return 0
 }
 
