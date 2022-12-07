@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
+	deb := time.Now()
 	a, _ := read("input.txt")
-
-	fmt.Println(a)
 	run(a)
+	fmt.Println(time.Since(deb))
 }
 
 func run(text []byte) {
@@ -22,7 +23,7 @@ func run(text []byte) {
 	out:
 		for i := pas - 14; i < pas; i++ {
 			for j := pas - 14; j < pas; j++ {
-				fmt.Println(i, j, text[i], text[j])
+				//fmt.Println(i, j, text[i], text[j])
 				if text[j] == text[i] && i != j {
 					ifdiff = false
 					break out
