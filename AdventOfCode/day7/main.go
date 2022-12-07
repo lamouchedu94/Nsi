@@ -4,87 +4,119 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
+	"sort"
+	"strings"
 )
 
-type folder []string
+type directory struct {
+	name      string
+	fileSize  int
+	totalSize int
+	parent    *directory
+	subdirs   []*directory
+}
 
 func main() {
-	data, err := read("input.txt")
+	data, err := read("input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
-	fmt.Println(data)
-    run(data)
+	calc(data)
+	//print(data)
+	r := 0
+	res(data, &r)
+	//fmt.Println(r)
+	alib := 30000000 - (70000000 - data.totalSize)
+	//fmt.Println(alib)
+	var tab []int
+	tabTotalSize(data, &tab)
+	sort.Ints(tab)
+	//fmt.Println(tab)
+	fmt.Println(min(tab, alib))
 }
 
-func run(tab []folder) int{
-	var nums []int
-	// /var tab_num []num
-	var temp string 
-
-    for _, t := range tab {
-		for _,num :=range t {
-			temp = ""
-			for _,car:= range num {
-				if car >='0' && car <= '9'{
-					temp=temp+string(car)
-				}else {
-					break
-				}
-				
-			}
-	n, _:= strconv.Atoi(temp)
-	nums = append(nums, n)
-	fmt.Println(nums)
+func min(tab []int, alib int) int {
+	for _, number := range tab {
+		if number > alib {
+			return number
 		}
-		//fmt.Println(t)
 	}
-return 0
+	return 0
 }
 
-func read(path string) ([]folder, error) {
-	var tab []folder
+func tabTotalSize(d *directory, t *[]int) {
+	for _, dir := range d.subdirs {
+		*t = append(*t, d.totalSize)
+		tabTotalSize(dir, t)
+	}
+
+}
+
+func res(d *directory, total *int) {
+	for _, dir := range d.subdirs {
+		res(dir, total)
+	}
+	if d.totalSize <= 100000 {
+		*total = *total + d.totalSize
+	}
+
+}
+
+func calc(d *directory) int {
+
+	d.totalSize = d.fileSize
+	for _, dir := range d.subdirs {
+		d.totalSize += calc(dir)
+	}
+	return d.totalSize
+}
+
+func read(path string) (*directory, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 	test := bufio.NewScanner(file)
-	test.Split(bufio.ScanLines)
-	
-	var f folder
+
+	root := directory{name: "/"}
+	curdir := &root
+
 	for test.Scan() {
 		data := test.Text()
-		//var f folder
 
-
-			//fmt.Println(string(data[0]))
-			if int(data[0]) >= '1' && int(data[0]) <= '9' {
-				f = append(f, data)
-				//fmt.Println(data)
-
+		switch {
+		case strings.HasPrefix(data, "$ cd"):
+			var a string
+			fmt.Sscanf(data, "$ cd %s", &a)
+			if a == "/" {
+				continue
 			}
-
-		if data[0] == '$' {
-			//fmt.Println()
-			if len(f) > 0 {
-				tab = append(tab, f)
-				f = folder{}
-
+			if a == ".." {
+				curdir = curdir.parent
+				continue
 			}
-			
+			newdir := directory{name: a, parent: curdir}
 
+			curdir.subdirs = append(curdir.subdirs, &newdir)
+			curdir = &newdir
+
+		case strings.HasPrefix(data, "dir"):
+			continue
+
+		case strings.HasPrefix(data, "$ ls"):
+			continue
+
+		default:
+			var size int
+			var name string
+			fmt.Sscanf(data, "%d %s", &size, &name)
+			curdir.fileSize += size
 		}
 
 	}
-	if len(f)>0{
-		tab = append(tab, f)
-		f = folder{}
-	}
-	return tab, err
+
+	return &root, err
 
 }
-
