@@ -4,110 +4,121 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 )
 
-type tree struct {
-	line   int
-	colone int
-	height int
-}
-
 type forest struct {
-	tree   []tree
-	line   int
-	colone int
+	tout [][]byte
 }
 
 func main() {
-	tab, foret, err := read("input.txt")
+	tab, err := read("input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	print(tab)
-	//fmt.Println(foret.tree)
-	//fmt.Println(foret.line, foret.colone)
-	fmt.Println(visible(foret))
+	//print(tab)
+	fmt.Println(visible(tab))
 }
 
-func calc_vis(f forest, t tree) bool {
-	var horizontal bool = false
-	var vertical bool = false
-	//top
-	for _, li := range f.tree {
-		if t.line == li.line && t.colone != li.colone {
-			if li.height < t.height {
-				horizontal = true
-			} else {
-				break
-			}
-		}
-	}
+func calc_visible(f forest, v int, h int) bool {
+	vis := true
+	mon_arbre := f.tout[v][h]
 	//left
-	for _, cl := range f.tree {
-		if t.colone == cl.colone && t.line != cl.line {
-			if cl.height < t.height {
-				vertical = true
-			} else {
-				break
-			}
+	for i := 0; i < h; i++ {
+		if f.tout[v][i] >= mon_arbre {
+			vis = false
+			break
 		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	if vis {
+		return vis
 	}
 
-	return horizontal || vertical
+	vis = true
+	//right
+	for i := h + 1; i < len(f.tout[0]); i++ {
+		if f.tout[v][i] >= mon_arbre {
+			vis = false
+			break
+		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	if vis {
+		return vis
+	}
+	//top
+	vis = true
+	for i := 0; i < v; i++ {
+		if f.tout[i][h] >= mon_arbre {
+			vis = false
+			break
+		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	//bottom
+	if vis {
+		return vis
+	}
+	vis = true
+	for i := v + 1; i < len(f.tout); i++ {
+		if f.tout[i][h] >= mon_arbre {
+			vis = false
+			break
+		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	if vis {
+		return vis
+	}
+
+	return false
 }
 
 func visible(f forest) int {
-	var vis int
-	for _, obj := range f.tree {
-		switch {
-		case obj.line == 0 || obj.line == f.line:
-			vis += 1
-		case obj.colone == 0 || obj.colone == f.colone:
-			vis += 1
-		default:
-			if calc_vis(f, obj) {
+	vis := 0
+	for v := 0; v < len(f.tout); v++ {
+		for h := 0; h < len(f.tout[0]); h++ {
+
+			if v == 0 || h == 0 || v == len(f.tout)-1 || h == len(f.tout[0])-1 {
+				vis += 1
+				continue
+			}
+
+			if calc_visible(f, v, h) {
+
 				vis += 1
 			}
+
 		}
-
 	}
-
 	return vis
 }
 
-func print(tab []string) {
-	for _, line := range tab {
-		fmt.Println(line)
+func print(tab forest) {
+	for _, t := range tab.tout {
+		for _, line := range t {
+			fmt.Print(string(line))
+		}
+		fmt.Println()
 	}
 }
 
-func read(path string) ([]string, forest, error) {
-	var tab []string
+func read(path string) (forest, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, forest{}, err
+		return forest{}, err
 	}
 	defer file.Close()
 	test := bufio.NewScanner(file)
 	test.Split(bufio.ScanLines)
 	var f forest
-	var ligne int
-	var col int
 	for test.Scan() {
-		for i, arbre := range test.Text() {
-			temp, _ := strconv.Atoi(string(arbre))
-			t := tree{line: ligne, colone: i, height: temp}
-			f.tree = append(f.tree, t)
-			col = i
-		}
-		ligne += 1
-		tab = append(tab, test.Text())
+		row := make([]byte, len(test.Bytes()))
+		copy(row, test.Bytes())
+		f.tout = append(f.tout, row)
 	}
-	f.line = ligne - 1
-	f.colone = col
 
-	return tab, f, err
+	return f, err
 
 }
