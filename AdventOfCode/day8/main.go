@@ -20,7 +20,7 @@ type forest struct {
 }
 
 func main() {
-	tab, foret, err := read("input1.txt")
+	tab, foret, err := read("input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -31,11 +31,10 @@ func main() {
 	fmt.Println(visible(foret))
 }
 
-func calc_vis(f forest, t tree) (bool, bool) {
+func calc_vis(f forest, t tree) bool {
 	var horizontal bool = false
 	var vertical bool = false
-	//left / right
-
+	//top
 	for _, li := range f.tree {
 		if t.line == li.line && t.colone != li.colone {
 			if li.height < t.height {
@@ -45,6 +44,7 @@ func calc_vis(f forest, t tree) (bool, bool) {
 			}
 		}
 	}
+	//left
 	for _, cl := range f.tree {
 		if t.colone == cl.colone && t.line != cl.line {
 			if cl.height < t.height {
@@ -55,7 +55,7 @@ func calc_vis(f forest, t tree) (bool, bool) {
 		}
 	}
 
-	return horizontal, vertical
+	return horizontal || vertical
 }
 
 func visible(f forest) int {
@@ -67,15 +67,14 @@ func visible(f forest) int {
 		case obj.colone == 0 || obj.colone == f.colone:
 			vis += 1
 		default:
-			h, v := calc_vis(f, obj)
-			if h || v {
+			if calc_vis(f, obj) {
 				vis += 1
 			}
 		}
 
 	}
 
-	return vis - 1
+	return vis
 }
 
 func print(tab []string) {
