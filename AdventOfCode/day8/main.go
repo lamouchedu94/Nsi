@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 )
 
 type forest struct {
@@ -20,79 +21,69 @@ func main() {
 	fmt.Println(visible(tab))
 }
 
-func calc_visible(f forest, v int, h int) bool {
-	vis := true
+func calc_visible(f forest, v int, h int) int {
+	count := 1
+	temp := 0
 	mon_arbre := f.tout[v][h]
 	//left
-	for i := 0; i < h; i++ {
+	for i := h - 1; i >= 0; i-- {
+		temp += 1
 		if f.tout[v][i] >= mon_arbre {
-			vis = false
 			break
 		}
 		//fmt.Println(string(f.tout[h][i]))
 	}
-	if vis {
-		return vis
-	}
+	count *= temp
 
-	vis = true
 	//right
+	temp = 0
 	for i := h + 1; i < len(f.tout[0]); i++ {
+		temp++
 		if f.tout[v][i] >= mon_arbre {
-			vis = false
 			break
 		}
 		//fmt.Println(string(f.tout[h][i]))
 	}
-	if vis {
-		return vis
-	}
-	//top
-	vis = true
-	for i := 0; i < v; i++ {
-		if f.tout[i][h] >= mon_arbre {
-			vis = false
-			break
-		}
-		//fmt.Println(string(f.tout[h][i]))
-	}
-	//bottom
-	if vis {
-		return vis
-	}
-	vis = true
-	for i := v + 1; i < len(f.tout); i++ {
-		if f.tout[i][h] >= mon_arbre {
-			vis = false
-			break
-		}
-		//fmt.Println(string(f.tout[h][i]))
-	}
-	if vis {
-		return vis
-	}
+	count *= temp
 
-	return false
+	//top
+	temp = 0
+	for i := v - 1; i >= 0; i-- {
+		temp += 1
+		if f.tout[i][h] >= mon_arbre {
+			break
+		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	count *= temp
+
+	//bottom
+	temp = 0
+	for i := v + 1; i < len(f.tout); i++ {
+		temp += 1
+		if f.tout[i][h] >= mon_arbre {
+			break
+		}
+		//fmt.Println(string(f.tout[h][i]))
+	}
+	count *= temp
+	return count
 }
 
 func visible(f forest) int {
-	vis := 0
+	var res []int
 	for v := 0; v < len(f.tout); v++ {
 		for h := 0; h < len(f.tout[0]); h++ {
 
 			if v == 0 || h == 0 || v == len(f.tout)-1 || h == len(f.tout[0])-1 {
-				vis += 1
 				continue
 			}
-
-			if calc_visible(f, v, h) {
-
-				vis += 1
-			}
-
+			res = append(res, calc_visible(f, v, h))
 		}
 	}
-	return vis
+	sort.Ints(res)
+	//fmt.Println(res[len(res)-1])
+	return res[len(res)-1]
 }
 
 func print(tab forest) {
