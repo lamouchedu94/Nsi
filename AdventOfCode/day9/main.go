@@ -21,25 +21,38 @@ type tail struct {
 }
 
 func main() {
-	inst, err := read("input.txt")
+	inst, err := read("input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(inst)
-	position(inst)
+	//fmt.Println(inst)
+	visited := position(inst)
+	fmt.Println(visited)
 
 }
 
-func position(tab_ins []instructs) {
+func position(tab_ins []instructs) int {
 	h := head{x: 0, y: 0}
 	t := tail{x: 0, y: 0}
+	var tab_pos []tail
 	for _, ins := range tab_ins {
 		for i := 0; i < ins.rep; i++ {
 			calcul_head_pos(ins, &h)
 			calcul_tail_pos(&h, &t)
+			calcul_is_visited(&tab_pos, &t)
 		}
 	}
+	return len(tab_pos)
+}
+
+func calcul_is_visited(tab_pos *[]tail, t *tail) {
+	for _, pos := range *tab_pos {
+		if pos.x == t.x && pos.y == t.y {
+			return
+		}
+	}
+	*tab_pos = append(*tab_pos, *t)
 }
 
 func calcul_tail_pos(h *head, t *tail) {
@@ -48,17 +61,21 @@ func calcul_tail_pos(h *head, t *tail) {
 	x := h.x - t.x
 	y := h.y - t.y
 
-	if x >= 1 {
-		t.x += x
-	}
-	if y >= 1 {
+	if x > 1 {
+		t.x += 1
 		t.y += y
 	}
-	if x <= -1 {
+	if y > 1 {
+		t.y += 1
 		t.x += x
 	}
-	if y <= -1 {
+	if x < -1 {
+		t.x += -1
 		t.y += y
+	}
+	if y < -1 {
+		t.y += -1
+		t.x += x
 	}
 
 }
