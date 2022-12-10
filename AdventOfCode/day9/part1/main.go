@@ -20,11 +20,6 @@ type point struct {
 	y int
 }
 
-type link struct {
-	hd *head
-	pt *point
-}
-
 func main() {
 	inst, err := read("input1.txt")
 	if err != nil {
@@ -32,20 +27,13 @@ func main() {
 		return
 	}
 	//fmt.Println(inst)
-	visited := position(inst, 10)
+	visited := position(inst)
 	fmt.Println(visited)
 
 }
 
-func position(tab_ins []instructs, num_point int) int {
+func position(tab_ins []instructs) int {
 	h := head{x: 0, y: 0}
-	var l link
-	for i := 0; i < num_point; i++ {
-		l.hd = &h
-		l.pt = &point{x: 0, y: 0}
-		h = head(*l.pt)
-	}
-
 	p := point{x: 0, y: 0}
 	var tab_pos []point
 	for _, ins := range tab_ins {
