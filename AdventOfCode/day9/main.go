@@ -15,9 +15,14 @@ type head struct {
 	x int
 	y int
 }
-type tail struct {
+type point struct {
 	x int
 	y int
+}
+
+type link struct {
+	hd *head
+	pt *point
 }
 
 func main() {
@@ -27,55 +32,62 @@ func main() {
 		return
 	}
 	//fmt.Println(inst)
-	visited := position(inst)
+	visited := position(inst, 10)
 	fmt.Println(visited)
 
 }
 
-func position(tab_ins []instructs) int {
+func position(tab_ins []instructs, num_point int) int {
 	h := head{x: 0, y: 0}
-	t := tail{x: 0, y: 0}
-	var tab_pos []tail
+	var l link
+	for i := 0; i < num_point; i++ {
+		l.hd = &h
+		l.pt = &point{x: 0, y: 0}
+		h = head(*l.pt)
+	}
+
+	p := point{x: 0, y: 0}
+	var tab_pos []point
 	for _, ins := range tab_ins {
 		for i := 0; i < ins.rep; i++ {
 			calcul_head_pos(ins, &h)
-			calcul_tail_pos(&h, &t)
-			calcul_is_visited(&tab_pos, &t)
+			calcul_tail_pos(&h, &p)
+			calcul_is_visited(&tab_pos, &p)
 		}
 	}
 	return len(tab_pos)
 }
 
-func calcul_is_visited(tab_pos *[]tail, t *tail) {
+func calcul_is_visited(tab_pos *[]point, p *point) {
 	for _, pos := range *tab_pos {
-		if pos.x == t.x && pos.y == t.y {
+		if pos.x == p.x && pos.y == p.y {
 			return
 		}
 	}
-	*tab_pos = append(*tab_pos, *t)
+	*tab_pos = append(*tab_pos, *p)
 }
 
-func calcul_tail_pos(h *head, t *tail) {
+func calcul_tail_pos(h *head, p *point) {
 	//xa = t.x	xb = h.x
 	//ya = t.y	yb = h.y
-	x := h.x - t.x
-	y := h.y - t.y
+	x := h.x - p.x
+	y := h.y - p.y
 
 	if x > 1 {
-		t.x += 1
-		t.y += y
+		p.x += 1
+		p.y += y
 	}
 	if y > 1 {
-		t.y += 1
-		t.x += x
+		p.y += 1
+		p.x += x
 	}
 	if x < -1 {
-		t.x += -1
-		t.y += y
+		p.x += -1
+		p.y += y
 	}
 	if y < -1 {
-		t.y += -1
-		t.x += x
+		p.y += -1
+		p.x += x
 	}
 
 }
