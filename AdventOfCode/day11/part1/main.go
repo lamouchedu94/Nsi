@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	tab, err := read("input1.txt")
+	tab, err := read("../input1.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
