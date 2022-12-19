@@ -26,7 +26,8 @@ def tab_mot(ligne) :
     res = str(i) + "_" + res
     tab.append(res)
     return tab
- 
+
+
 def conv_int(mot):
     res = ""
     for car in mot :
@@ -34,7 +35,7 @@ def conv_int(mot):
             res+= car
         else :
             return int(res)
- 
+    return 0
 def tri_num(tab):
  
     #tri nombres
@@ -49,25 +50,34 @@ def tri_num(tab):
  
         nb_tries+=1 
     return None
- 
+    
 def tri_lettre(tab):
-    for j in range(len(tab)-1):
-        for i in range(j, len(tab)-1) :
+    triee = False
+    nb_tries = 0
+    while not triee :
+        triee = True
+        for i in range(len(tab)-nb_tries-1) :
             if conv_int(tab[i]) == conv_int(tab[i+1]):
                 #si le 2 plus grand
                 if not mot_plus_petit(tab[i], tab[i+1]) :
                     tab[i],tab[i+1]=tab[i+1],tab[i]
+                    triee = False
+        nb_tries += 1
     return None
  
 def mot_plus_petit(mot1,mot2):
     #True si mot1 plus petit
     for i in range(len(mot1)):
-        if ord(mot1[i])>ord(mot2[i]):
+        if ord(mot1[i])<ord(mot2[i]):
+            return True
+        elif ord(mot1[i])==ord(mot2[i]): 
+            continue
+        else :
             return False
-    return True
+    return False
  
-print(mot_plus_petit("6", "7_azerty")) 
- 
+print(mot_plus_petit("5_coupe","5_monde")) 
+
 mot = read("test1.txt")
 #print(read("test.txt"))
 tab = tab_mot(mot)
