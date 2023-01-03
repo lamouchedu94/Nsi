@@ -240,17 +240,13 @@ I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. Th
 48Z55	67318	Jeremy Bowers	20160101	gold
 
 ---
-## EN une ligne
+## EN presque une ligne
 ```sql 
 select name, MAX(address_number) from person where address_street_name in 
 (select address_street_name from person where address_street_name="Northwestern Dr") 
 order by address_number DESC; 
 
 select * from interview where person_id in (select id from person where name = 'Morty Schapiro');
-
-select name from get_fit_now_member where id like '%48Z%' and membership_status='gold';
-
-select * from person where name in (select name from get_fit_now_member where id like '%48Z%' and membership_status='gold');
 
 select * from drivers_license where id in (select license_id from person where name in (select name from get_fit_now_member where id like '%48Z%' and membership_status='gold'));
 
