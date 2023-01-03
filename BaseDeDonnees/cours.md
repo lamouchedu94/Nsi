@@ -107,3 +107,37 @@ join matiere on matiere.id = note.id_matiere
 join eleve on note.id_eleve = eleve.id
 join prof on prof.num_classe = eleve.classe and matiere.id = prof.id_matiere
 ```
+
+### Types d'atributs :
+- SmallInt (entier 16 bits avec un signe)
+- Int (entier 32 bits avec signe)
+- BigInt (entier 64 bits avec signe) 
+- Decimal(t,f) (décimal signé de t chiffre dont f après la virgule)
+- Real (flotant sur 32 bits)
+- Double (flotant sur 64 bits)
+
+---
+
+- Char(n) chaine de n caractère (si il en manque complté par des espaces)
+- VarChar(n) Chaine d'au plus n caractère
+- Text chaine de n'importe qu'elle longueur
+
+---
+
+- Date : AAAA-MM-JJ
+- Time : HH:MM:SS
+- Timestamp : AAAA-MM-JJ HH:MM:SS
+
+--- 
+
+- SERIAL : dans le cas de postgre, entier qui s'incrémente automatiquement à chaque nouvel enrengistrement
+
+La constante Null à tous les types possible
+
+Si on veut interdire à l'utilisateur d'utiliser Null rajouter "NOT NULL" lors de la création de la table. Ex : 
+```sql
+CREATE TABLE exemple(nom VARCHAR NOT NULL);
+CREATE TABLE client(id SERIAL PRIMARY KEY, nom VARCHAR NOT NULL, age SMALLINT, CHECK(age>=0 AND age <= 150));
+DROP TABLE exemple;  '(possible uniquement si aucune celf étrangère d"une autre table ne pointe une clef primaire de cette table.)'
+CREATE TABLE voiture(immatriculation VARCHAR(10) PRIMARY KEY, marque VARCHAR(255), modele VARCHAR(255), proprietaire INT REFERENCES client(id));
+```
