@@ -165,12 +165,18 @@ SELECT client.nom, voiture.marque, voiture.modele FROM voiture JOIN client ON vo
 
 ## SQL MURDER MYSTERY
 ```sql
-select * from crime_scene_report where type IN (SELECT type FROM crime_scene_report WHERE type='murder') AND date IN (select date FROM crime_scene_report where date=20180115) ;
+select * from crime_scene_report where type IN (SELECT type FROM crime_scene_report WHERE type='murder') 
+AND date IN (select date FROM crime_scene_report where date=20180115)
+AND city IN (select city FROM crime_scene_report where city="SQL City"); ;
 
-select * from person where id IN (SELECT id from person where address_street_name= "Franklin Ave"); ;
+select * from person where id IN (SELECT id from person where address_street_name= "Franklin Ave"); 
 
-select name, address_number from person where address_street_name in (select address_street_name from person where address_street_name="Northwestern Dr") order by address_number DESC;             
+select name, address_number from person where address_street_name in (select address_street_name from person where address_street_name="Northwestern Dr") order by address_number DESC; 
 
+select * from get_fit_now_member where membership_status in 
+(select membership_status from get_fit_now_member where membership_status ='gold');
+
+select * from drivers_license where id in (select license_id from person where name='Jeremy Bowers');
 
 ```
 
@@ -227,3 +233,25 @@ Security footage shows that there were 2 witnesses. The first witness lives at t
 - address_number : 4919
 - address_street_name : Northwestern Dr
 - ssn : 111564949
+
+I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".
+
+48Z7A	28819	Joe Germuska	20160305	gold
+48Z55	67318	Jeremy Bowers	20160101	gold
+
+---
+## EN une ligne
+```sql 
+select name, MAX(address_number) from person where address_street_name in 
+(select address_street_name from person where address_street_name="Northwestern Dr") 
+order by address_number DESC; 
+
+select * from interview where person_id in (select id from person where name = 'Morty Schapiro');
+
+select name from get_fit_now_member where id like '%48Z%' and membership_status='gold';
+
+select * from person where name in (select name from get_fit_now_member where id like '%48Z%' and membership_status='gold');
+
+select * from drivers_license where id in (select license_id from person where name in (select name from get_fit_now_member where id like '%48Z%' and membership_status='gold'));
+
+```
