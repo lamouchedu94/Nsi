@@ -141,3 +141,41 @@ CREATE TABLE client(id SERIAL PRIMARY KEY, nom VARCHAR NOT NULL, age SMALLINT, C
 DROP TABLE exemple;  '(possible uniquement si aucune celf étrangère d"une autre table ne pointe une clef primaire de cette table.)'
 CREATE TABLE voiture(immatriculation VARCHAR(10) PRIMARY KEY, marque VARCHAR(255), modele VARCHAR(255), proprietaire INT REFERENCES client(id));
 ```
+
+```sql 
+INSERT INTO client (nom,age) VALUES ('Martin', 27), ('Alice', 71), ('Bob', 74);
+INSERT INTO voiture (immatriculation, marque, modele, proprietaire) VALUES ('AB123CD', 'Ferrari', 'F456', 1);
+INSERT INTO voiture (immatriculation, marque, modele, proprietaire) VALUES ('EF456GH', 'Mercedes', 'classe E', (SELECT id FROM client WHERE nom='Alice'));
+INSERT INTO voiture (immatriculation, marque, modele, proprietaire) VALUES ('IJ789KL', 'Lada', '2107', (SELECT id FROM client WHERE nom='Bob'));
+INSERT INTO voiture (immatriculation, marque, modele, proprietaire) VALUES ('EF458GH', 'Mercedes', 'classe S', (SELECT id FROM client WHERE nom='Alice'));
+
+'Changement de proprio :'
+UPDATE voiture SET proprietaire=(SELECT id FROM client WHERE nom='Bob');
+
+'Avoir tous les proprio de Mercedes :'
+SELECT nom FROM client WHERE id IN (SELECT proprietaire FROM voiture WHERE marque='Mercedes')
+
+'Sup Mercedes:'
+DELETE FROM voiture WHERE marque='Mercedes'
+
+
+SELECT client.nom, voiture.marque, voiture.modele FROM voiture JOIN client ON voiture.proprietaire=client.id;
+```
+
+
+### SQL MURDER MYSTERY
+```sql
+select * from crime_scene_report where type IN (SELECT type FROM crime_scene_report WHERE type='murder') AND date IN (select date FROM crime_scene_report where date=20180115) ;
+
+select * from person where id IN (SELECT id from person where address_street_name= "Franklin Ave"); ;
+
+
+
+```
+
+Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave".
+
+
+16371	Annabel Miller	490173	103	Franklin Ave	318771143
+
+16371	I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th.
