@@ -108,7 +108,7 @@ join eleve on note.id_eleve = eleve.id
 join prof on prof.num_classe = eleve.classe and matiere.id = prof.id_matiere
 ```
 
-### Types d'atributs :
+# Types d'atributs :
 - SmallInt (entier 16 bits avec un signe)
 - Int (entier 32 bits avec signe)
 - BigInt (entier 64 bits avec signe) 
@@ -163,12 +163,13 @@ SELECT client.nom, voiture.marque, voiture.modele FROM voiture JOIN client ON vo
 ```
 
 
-### SQL MURDER MYSTERY
+## SQL MURDER MYSTERY
 ```sql
 select * from crime_scene_report where type IN (SELECT type FROM crime_scene_report WHERE type='murder') AND date IN (select date FROM crime_scene_report where date=20180115) ;
 
 select * from person where id IN (SELECT id from person where address_street_name= "Franklin Ave"); ;
 
+select name, address_number from person where address_street_name in (select address_street_name from person where address_street_name="Northwestern Dr") order by address_number DESC;             
 
 
 ```
@@ -179,3 +180,50 @@ Security footage shows that there were 2 witnesses. The first witness lives at t
 16371	Annabel Miller	490173	103	Franklin Ave	318771143
 
 16371	I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th.
+
+### Structure de données
+
+#### crime_scene_report : 
+- date : 20180115 	
+- type : robbery/murder/theft/fraud
+- description :    
+- city : 
+#### drivers_license
+- id : 100280
+- age : 72
+- height : 	
+- eye_color :	
+- hair_color :	
+- gender :
+- plate_number : P24L4U
+- car_make :
+- car_model :
+#### facebook_event_checkin
+- person_id : 28508
+- event_id : 5880
+- event_name :
+- date : 20170913
+#### interview 
+- person_id	: 28508
+- transcript
+#### get_fit_now_member
+- id :
+- person_id :
+- name :
+- membership_start_date :
+- membership_status :
+#### get_fit_now_check_in
+- membership_id
+- check_in_date
+- check_in_time
+- check_out_time
+#### income
+- ssn :
+- annual_income :
+#### person
+- id : 14887
+- name : Morty Schapiro
+- license_id : 118009
+- address_number : 4919
+- address_street_name : Northwestern Dr
+- ssn : 111564949
