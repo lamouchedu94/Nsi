@@ -160,7 +160,30 @@ DELETE FROM voiture WHERE marque='Mercedes'
 
 
 SELECT client.nom, voiture.marque, voiture.modele FROM voiture JOIN client ON voiture.proprietaire=client.id;
+
+SELECT DISTINCT marque FROM voiture;
+
+SELECT immatriculation FROM voiture ORDER BY immatriculation ASC;
+
+SELECT * FROM voiture WHERE immatriculation LIKE '%12%';
+SELECT * FROM voiture WHERE immatriculation LIKE '_B__3_D';
 ```
+
+On appel shéma relationnel l'enssemble des relations présente dans une bdd. Quand on demande le shéma relationnel d'une base de données, il faut donner le nom des différentes relations, avec leurs attributs (et leur type), en précsant les clefs primaires et clefs étangère lorsqu'il y en a.
+
+Nous adopterons la convention suivante : lorsqu'on écrit le shéma d'une base la clef primaire est l'attribut dont le nom est souligné dans le shéma, les nom d'attributs qui sont des clefs étrangères sont précédés par un #. (Attention : Ce n'est pas la syntaxe que l'on utilise dans l'implémentation de la base, ça permet simplement de proposer un schéma facilement lisible.)
+
+Par convention, les mots liés a langage sont en majuscules, les autres en minuscules. On met les noms de relations au singulier. 
+
+A chaque fois qu'on modifie ou ajoute un enrengistrement à une base de donnée, le SGBD effectue divers contrôles, pour s'assurer de l'intégrité des données. Ce qui permet par exemple d'éviter cetaines erreurs de saisie. Ces contrôles dépendent de ce qui a été indiqué lors de la création de la base via ce que l'on appelle les contraites (d'intégrité).
+
+
+Le langage SQL comporte des fonctions qui peuvent calculer un résultat en fonctions des valeurs d'une colonne de la table. On les appelle des fonctions d'agrégation. Par exemple, MIN,MAX,AVG (moyenne), COUNT (renvoie le bombre d'enrengistrements selectionnés). 
+```sql 
+SELECT COUNT(*) FROM voiture WHERE marque='Mercedes';
+SELECT MAX(id) FROM client 
+```
+
 
 
 ## SQL MURDER MYSTERY
@@ -251,4 +274,7 @@ select * from interview where person_id in (select id from person where name = '
 select * from drivers_license where id in (select license_id from person where name in (select name from get_fit_now_member where id like '%48Z%' and membership_status='gold'));
 
 select * from person where license_id=423327;
+```
+```sql
+SELECT groupes.nom FROM groupes JOIN concerts ON groupes.idgrpe=concerts WHERE concerts.scene=1;
 ```
