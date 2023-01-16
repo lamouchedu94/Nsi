@@ -7,7 +7,7 @@ Un arbre binaire est un enssemble fini de noeud correspondant à l'un des deux c
     - la racine est relié à la racine de chacun de ces sous arbre (lorsqu'ils ne sont pas vide)
 
 La taille d'un arbre binaire est le nombre de noeud qu'il contient. 
-## Papier
+## Phtoto Papier
 Un noeud dont les 2 sous arbres sont vide s'appel une feuille
 
 La Hauteur d'un arbre : Le plus grand nombre de noeud rencontrés en déscendant de la racine jusqu'à une feuille
@@ -44,3 +44,4 @@ Parcourir un arbre c'est passer une et une seule fois par chaque noeud de l'arbr
     - Parcour Postfix du ss arbre D
     - Puis note valeur de la racine
     
+Implémenter taille et hauteur. Parcour Infix.
