@@ -3,11 +3,11 @@ Un arbre binaire est un enssemble fini de noeud correspondant à l'un des deux c
 - Arbre vide (aucun noeud)
 - Soit l'arbre n'est pas vide et ses noeud sot structuré de la façon suivante :
     - Un noeud est appelé la racine de l'arbre
-    - les noeuds restants sont séparés en 2 sous enssemebles qui forment récusivement deux sous arbres appelés sous arbre Gauche et Sous arbre Droit
+    - les noeuds restants sont séparés en 2 sous enssembles qui forment récusivement deux sous arbres appelés sous arbre Gauche et Sous arbre Droit
     - la racine est relié à la racine de chacun de ces sous arbre (lorsqu'ils ne sont pas vide)
 
 La taille d'un arbre binaire est le nombre de noeud qu'il contient. 
-## Phtoto Papier
+## Photo Papier
 Un noeud dont les 2 sous arbres sont vide s'appel une feuille
 
 La Hauteur d'un arbre : Le plus grand nombre de noeud rencontrés en déscendant de la racine jusqu'à une feuille
