@@ -43,5 +43,12 @@ Parcourir un arbre c'est passer une et une seule fois par chaque noeud de l'arbr
     - Parcour Postfix du ss arbre G
     - Parcour Postfix du ss arbre D
     - Puis note valeur de la racine
-    
-Implémenter taille et hauteur. Parcour Infix.
+
+Ces 3 parcours sont des parcours en Profondeur
+
+Dans un parcour en largeur on parcour d'abord tous les noeuds à la hauteur 1 de l'arbre puis tous les noeuds à la hauteur 2 de l'arbre et ainsi de suite.
+
+# Arbre de binaire de recherche (abr) 
+Un arbre bianire de recherche est un arbre binaire dont les noeuds contiennent des valeurs qui peuvent être comparées entre elles. et comme tous noeud de l'arbre toutes les valeurs situé dans le ssarbre gauche sont plus petit que la valeur du noeud et toutes les valeurs situées dans le ssarbre droit sont plus grandes que la valeur du noeud. 
+
+Rem : pour un enssemble de valeurs donnés peut être stocké dans différents abr 

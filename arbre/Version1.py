@@ -51,6 +51,19 @@ class Noeud:
         if self.droite() is not None:
             self.droite()._arbre2tab(tab,2*i+1)
         return tab
+    def _ajoute_abr(self,n, val):
+        """n est non None"""
+        if val<n.val():
+            if n.g == None :
+                n.g = Noeud(val)
+                return None
+            self._ajoute_abr(n.g,val)
+        if val> n.val() :
+            if n.d == None :
+                n.d=Noeud(val)
+                return None
+            self._ajoute_abr(n.d,val)
+        return None
     
 class Arbre:
     def __init__(self,tab=None):
@@ -141,3 +154,119 @@ print(a.__repr__(a.racine))
 print(a.larg(a.racine))
 arbre = Noeud(1, Noeud(2, None, Noeud(4)), Noeud(3, Noeud(5), None))
 arbre_n = Noeud(1)
+
+class Abr :
+    def __init__(self,tab=None):
+        if tab==None:
+            self.racine=None
+        else:
+            noeud=Noeud(None,None,None)
+            self.racine=noeud._tab2arbre(tab)
+        return None
+    
+    def taille(self):
+        if self.racine == None :
+            return 0
+        return self.racine._taille(self.racine)
+    
+    def hauteur(self):
+        if self.racine == None :
+            return 0 
+        return self.racine._hauteur(self.racine)
+
+    def __eq__(self,arbre):
+        if arbre is None :
+            return False
+        if arbre.racine is None and self.racine is None :
+            return True
+        if arbre.racine is None or self.racine is None :
+            return False
+        return self.racine._egal(self.racine, arbre.racine)
+    
+    def __str__(self,n):
+        if n != None:
+            return "("+self.__str__(n.gauche())+str(n.val())+self.__str__(n.droite())+")"
+        return ""
+    
+    def __repr__(self,n ):
+        return "Arbre (" + self.__str__(n) + ")" 
+    
+    def prefixe(self,n):
+        if n == None:
+            return []
+        return [n.val()]+self.prefixe(n.g)+self.prefixe(n.d)
+    
+    def postfixe(self,n):
+        if n == None:
+            return []
+        return self.postfixe(n.g)+self.postfixe(n.d)+[n.val()]
+    
+    def infixe(self,n):
+        if n == None:
+            return []
+        return self.infixe(n.g)+[n.val()]+self.infixe(n.d)
+
+    def larg(self,n):
+        file = []
+        res = []
+        file.append(n)
+        if n == None :
+            return []
+        '''
+        while current is not None :
+            file.append(current)
+            current = current.gauche()
+        print(file)
+        '''
+        while len(file) > 0 :
+            if file[0].gauche() != None :
+                file.append(file[0].gauche())
+            if file[0].droite() != None :
+                file.append(file[0].droite())
+            res.append(file.pop(0).val())
+        return res
+
+    def recherche(self) :
+        pass
+    
+    def min(self):
+        pass
+
+    def max(self):
+        pass
+
+    def ajouter(self, val):
+        if self.racine == None :
+            self.racine = Noeud(None, val, None)
+            return None
+        '''
+        if val<self.val():
+            if self.gauche() == None :
+                self.g= Noeud(val)
+                return None
+            self.gauche.ajoute(val)
+        if val > self.val
+        
+        '''
+        n = self.racine
+        while val > n.gauche().val() or  val < n.droite().val() :
+            if val < n.gauche().val() :
+                n = n.gauche()
+            else :
+                n = n.droite()
+            
+            try : 
+                n.gauche.val()
+            except : 
+                break
+        print(n.val())
+    '''
+    def supprimer(self):
+        pass
+
+    def equilibre(self):
+        pass
+    '''
+c = Abr([None,4,2,6,1,3,5,7])
+c.racine._ajoute_abr(c.racine, 8)
+print(c.__str__(c.racine))
