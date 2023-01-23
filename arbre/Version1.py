@@ -62,11 +62,15 @@ class Arbre:
         return None
     
     def taille(self):
+        if self.racine == None :
+            return 0
         return self.racine._taille(self.racine)
     
     def hauteur(self):
+        if self.racine == None :
+            return 0 
         return self.racine._hauteur(self.racine)
-    
+
     def __eq__(self,arbre):
         if arbre is None :
             return False
@@ -99,8 +103,26 @@ class Arbre:
             return []
         return self.infixe(n.g)+[n.val()]+self.infixe(n.d)
 
-    def larg(self):
-        pass
+    def larg(self,n):
+        file = []
+        res = []
+        file.append(n)
+        if n == None :
+            return []
+        '''
+        while current is not None :
+            file.append(current)
+            current = current.gauche()
+        print(file)
+        '''
+        while len(file) > 0 :
+            if file[0].gauche() != None :
+                file.append(file[0].gauche())
+            if file[0].droite() != None :
+                file.append(file[0].droite())
+            res.append(file.pop(0).val())
+        return res
+
 
 '''
 def same(n1,n2):
@@ -116,5 +138,6 @@ print(a.hauteur())
 print(a.__str__(a.racine))
 print(a.infixe(a.racine))
 print(a.__repr__(a.racine))
+print(a.larg(a.racine))
 arbre = Noeud(1, Noeud(2, None, Noeud(4)), Noeud(3, Noeud(5), None))
 arbre_n = Noeud(1)
