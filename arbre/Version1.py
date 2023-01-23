@@ -80,10 +80,10 @@ class Arbre:
         if n != None:
             return "("+self.__str__(n.gauche())+str(n.val())+self.__str__(n.droite())+")"
         return ""
-    """
-    def __repr__(self,n):
-        return "Arbre (" + self.__str__() + ")" 
-    """
+    
+    def __repr__(self,n ):
+        return "Arbre (" + self.__str__(n) + ")" 
+    
     def prefixe(self,n):
         if n == None:
             return []
@@ -99,6 +99,9 @@ class Arbre:
             return []
         return self.infixe(n.g)+[n.val()]+self.infixe(n.d)
 
+    def larg(self):
+        pass
+
 '''
 def same(n1,n2):
     return affiche(n1) == affiche(n2)
@@ -112,5 +115,6 @@ print(a.taille())
 print(a.hauteur())
 print(a.__str__(a.racine))
 print(a.infixe(a.racine))
+print(a.__repr__(a.racine))
 arbre = Noeud(1, Noeud(2, None, Noeud(4)), Noeud(3, Noeud(5), None))
 arbre_n = Noeud(1)
