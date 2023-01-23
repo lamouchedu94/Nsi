@@ -51,6 +51,7 @@ class Noeud:
         if self.droite() is not None:
             self.droite()._arbre2tab(tab,2*i+1)
         return tab
+    
     def _ajoute_abr(self,n, val):
         """n est non None"""
         if val<n.val():
@@ -64,7 +65,29 @@ class Noeud:
                 return None
             self._ajoute_abr(n.d,val)
         return None
+
+    def _min(self, n):
+        if n.g is None : 
+            return n.v
+        return self._min(n.g)
     
+    def _max(self, n):
+        if n.d is None :
+            return n.v
+        return self._max(n.d)
+    
+    def _recherche(self, n, val):
+        if n.v == val :
+            return True
+        if n.v > val :
+            if n.g is None :
+                return False
+            return self._recherche(n.g, val)
+        else :
+            if n.d is None :
+                return False
+            return self._recherche(n.d, val)
+
 class Arbre:
     def __init__(self,tab=None):
         if tab==None:
@@ -226,15 +249,20 @@ class Abr :
             res.append(file.pop(0).val())
         return res
 
-    def recherche(self) :
-        pass
-    
+    def recherche(self, val) :
+        if self.racine is not None :
+            return self.racine._recherche(self.racine, val)
+        return False
     def min(self):
-        pass
-
+        if self.racine is not None :
+            return self.racine._min(self.racine)
+        return 0
+    
     def max(self):
-        pass
-
+        if self.racine is not None :
+            return self.racine._max(self.racine)
+        return 0 
+    
     def ajouter(self, val):
         if self.racine == None :
             self.racine = Noeud(None, val, None)
@@ -268,5 +296,8 @@ class Abr :
         pass
     '''
 c = Abr([None,4,2,6,1,3,5,7])
-c.racine._ajoute_abr(c.racine, 8)
+#c.racine._ajoute_abr(c.racine, 8)
 print(c.__str__(c.racine))
+print(c.min())
+print(c.max())
+print(c.recherche(10))
