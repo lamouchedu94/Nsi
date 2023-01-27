@@ -76,17 +76,33 @@ class Noeud:
             return n.v
         return self._max(n.d)
     
-    def _recherche(self, n, val):
+    def _recherche(self, n, val, r = False):
         if n.v == val :
-            return True
+            if r :
+                return n
+            else : 
+                return True
         if n.v > val :
             if n.g is None :
                 return False
-            return self._recherche(n.g, val)
+            return self._recherche(n.g, val, r)
         else :
             if n.d is None :
                 return False
-            return self._recherche(n.d, val)
+            return self._recherche(n.d, val, r)
+    
+    def _pop_min(self, n):
+        if n.gauche().gauche()==None :
+            val = n.gauche().val
+            n.g = n.gauche().droite()
+            return val
+        return self._pop_min(n.gauche())
+
+    def _supprime_abr(self, n, val):
+        n=self._recherche(n, val, True)
+        n.v=self._pop_min(n)
+        return None
+
 
 class Arbre:
     def __init__(self,tab=None):
@@ -158,12 +174,6 @@ class Arbre:
                 file.append(file[0].droite())
             res.append(file.pop(0).val())
         return res
-
-
-'''
-def same(n1,n2):
-    return affiche(n1) == affiche(n2)
-'''
 
 a = Arbre([None,1,2,3,4,5])
 b = Arbre([None,1,2,3])
@@ -253,12 +263,12 @@ class Abr :
         if self.racine is not None :
             return self.racine._recherche(self.racine, val)
         return False
-    def min(self):
+    def mini(self):
         if self.racine is not None :
             return self.racine._min(self.racine)
         return 0
     
-    def max(self):
+    def maxi(self):
         if self.racine is not None :
             return self.racine._max(self.racine)
         return 0 
@@ -267,15 +277,6 @@ class Abr :
         if self.racine == None :
             self.racine = Noeud(None, val, None)
             return None
-        '''
-        if val<self.val():
-            if self.gauche() == None :
-                self.g= Noeud(val)
-                return None
-            self.gauche.ajoute(val)
-        if val > self.val
-        
-        '''
         n = self.racine
         while val > n.gauche().val() or  val < n.droite().val() :
             if val < n.gauche().val() :
@@ -295,9 +296,33 @@ class Abr :
     def equilibre(self):
         pass
     '''
+    def pop_min(self) :
+        return self.racine._pop_min(self.racine)
+    
+    def sup(self, val):
+        self.racine._supprime_abr(self.racine, val)
+
+
+def tri_abr(liste) :
+    a=Abr()
+    for val in liste:
+        a.ajouter(val)
+    return a.infixe()
+
+
 c = Abr([None,4,2,6,1,3,5,7])
+'''
 #c.racine._ajoute_abr(c.racine, 8)
 print(c.__str__(c.racine))
-print(c.min())
-print(c.max())
+print(c.mini())
+print(c.maxi())
 print(c.recherche(10))
+#c.pop_min()
+print(c.__str__(c.racine))
+c.sup(1)
+'''
+
+d = tri_abr([4,2,0,8,10,12,3,1])
+print(d.__str__(d.racine))
+print(d.infixe(d.racine))
+#uwu owo éwè awa awa 
