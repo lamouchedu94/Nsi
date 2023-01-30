@@ -39,6 +39,15 @@ class Routeur :
         pass
 
 reseau = Reseau()
+reseau.ajout("A", ["B", "C"])
+reseau.ajout("B", ["A", "C", "F"])
+reseau.ajout("C", ["A","B","D"])
+reseau.ajout("D", ["C", "E"])
+reseau.ajout("E", ["D", "F"])
+reseau.ajout("F", ["E", "G", "B"])
+print(reseau)
+
+"""
 reseau.ajout("seveur", ["192.168.1.0/24"])
 reseau.ajout("R1", ["192.168.1.0/24", "10.1.1.0/30"])
 reseau.ajout("R3", ["10.1.2.0/30", "10.1.4.0/30", "10.1.3.0/28", "10.1.1.0/30"])
@@ -48,3 +57,4 @@ reseau.ajout("R5", ["10.1.6.0/30", "10.1.5.0/28","10.1.4.0/30", "10.1.7.0/28"])
 reseau.ajout("R6", ["10.1.7.0/28", "192.168.6.0/24"])
 reseau.ajout("client", ["192.168.6.0/24"])
 print(reseau)
+"""
