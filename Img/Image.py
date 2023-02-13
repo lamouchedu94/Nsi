@@ -10,7 +10,7 @@ for ligne in range(hauteur) :
     for colone in range(largeur) :
         tourne.putpixel((ligne,colone), a.getpixel((hauteur-1-colone, ligne)))
 tourne.show()
-'''
+
 def anti_horaire(nom) :
     photo = Image.open(nom)
     hauteur, largeur = photo.size
@@ -99,9 +99,9 @@ print()
 affichage(new)
 
 
-
+'''
 from PIL import Image
-photo=Image.open('photo.bmp')
+photo=Image.open('Img/photo.bmp')
  
  
  
@@ -133,20 +133,18 @@ def rotation_indirecte_sp(img):
     return None
  
 def rotation_directe_sp(img):
-    hauteur,largeur=photo.size
-    for ligne in range(hauteur):
-        for colonne in range(largeur):
+    hauteur,largeur=img.size
+    for ligne in range(hauteur//2):
+        for colonne in range(largeur//2):
+            temp=img.getpixel((ligne,colonne))
+            
             photo.putpixel((ligne,colonne),photo.getpixel((largeur-1-colonne,ligne)))
+            photo.putpixel((largeur-1-colonne,ligne),photo.getpixel((hauteur-1-ligne, largeur-1-colonne)))
+            photo.putpixel((hauteur-1-ligne, largeur-1-colonne),photo.getpixel((colonne,hauteur-1-ligne)))
+            photo.putpixel((colonne,hauteur-1-ligne),temp)
     return None
  
+#photo.show()
+#rotation_indirecte_sp(photo)
+rotation_directe_sp(photo)
 photo.show()
-rotation_indirecte_sp(photo)
-photo.show()
-
-def rotation_recurs(photo, l,l_max,h, h_max):
-    #if
-        #plus qu'un pixel
-    l = l // 4
-    h = h // 4 
-    for i in range(4) :
-        rotation_recurs(l)

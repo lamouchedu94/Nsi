@@ -23,7 +23,7 @@ def fibo_bt(n):
     for i in range(2,1+n):
         memo[i] =memo[i-1]+memo[i-2]
     return memo[n]
-#fibo_bt(1000000)
+fibo_bt(500000)
 #print(fibo_bt(50000))
 
 def minimum(liste):
