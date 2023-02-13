@@ -1,3 +1,7 @@
+from PIL import Image
+
+
+
 def gen_photo(long, larg) :
     res = []
     count = 0
@@ -15,7 +19,7 @@ def affichage(tab):
     for ligne in tab :
         print(ligne)
 
-photo = gen_photo(3,3)
+photo = gen_photo(3,4)
 affichage(photo)
 
 def rotation(photo):
