@@ -1,191 +1,104 @@
 from PIL import Image
-'''
-a = Image.open("Img/photo.bmp")
-#a.show()
 
-hauteur, largeur = a.size
-tourne= Image.new(mode='RGB', size=(hauteur, largeur))
-
-for ligne in range(hauteur) :
-    for colone in range(largeur) :
-        tourne.putpixel((ligne,colone), a.getpixel((hauteur-1-colone, ligne)))
-tourne.show()
-
-def anti_horaire(nom) :
-    photo = Image.open(nom)
-    hauteur, largeur = photo.size
-    tourne= Image.new(mode='RGB', size=(hauteur, largeur))
-
-    for ligne in range(hauteur) :
-        for colone in range(largeur) :
-            tourne.putpixel((ligne,colone), photo.getpixel((hauteur-1-colone, ligne)))
-    return tourne
-
-def horaire(nom) :
-    photo = Image.open(nom)
-    hauteur, largeur = photo.size
-    tourne= Image.new(mode='RGB', size=(hauteur, largeur))
-
-    for ligne in range(hauteur) :
-        for colone in range(largeur) :
-            tourne.putpixel((ligne,colone), photo.getpixel((colone, largeur-1-ligne)))
-    return tourne
-
-
-def anti_horaire_sp(nom) :
-    photo = Image.open(nom)
-    hauteur, largeur = photo.size
-
-    for ligne in range(hauteur) :
-        for colone in range(largeur) :
-            photo.putpixel((ligne,colone), photo.getpixel((hauteur-1-colone, ligne)))
-    photo.show()
-    return None
-
-def horaire_sp(nom) :
-    photo = Image.open(nom)
-    hauteur, largeur = photo.size
-    for ligne in range(hauteur//2) :
-        for colone in range(largeur//2) :
-            temp = []
-            temp.append(photo.getpixel(((ligne,colone))))
-            temp.append(photo.getpixel((colone, largeur-1-ligne)))
-            temp.append(photo.getpixel((hauteur- 1- colone,largeur-1-ligne)))
-            temp.append(photo.getpixel((colone,largeur-1-ligne)))
-            
-            photo.putpixel((hauteur- 1- colone,ligne), temp[0])    
-            photo.putpixel((colone, largeur-1-ligne), temp[2])
-            photo.putpixel((hauteur- 1- colone,largeur-1-ligne),temp[3])
-            photo.putpixel((ligne,colone), temp[2])
-            
-    photo.show()
-    return None
-
-horaire_sp("Img/photo.bmp")
-
-def gen_photo(long, larg) :
-    res = []
-    count = 0
-    for _ in range(larg):
-        temp = []
-        for _ in range(long):
-            count += 1
-            temp.append(count)
-        res.append(temp)
-    return res
-
-def affichage(tab):
-    if tab == None :
-        return
-    for ligne in tab :
-        print(ligne)
-
-photo = gen_photo(3,4)
-affichage(photo)
-
-def rotation(photo):
-    colone = len(photo[0])
-    res = []
-    for i in range(colone):
-        n_ligne = []
-        for j in range(len(photo) - 1, -1, -1):
-            ligne = photo[j]
-            n_ligne.append(ligne[i])
-        res.append(n_ligne)
-    return res
-
-new = rotation(photo)
-print()
-affichage(new)
-'''
-from PIL import Image
-photo=Image.open('Img/photo.bmp')
 import time 
 
-
 def rotation_indirecte(img):
-    hauteur,largeur=photo.size
+    hauteur,largeur=img.size
     tourne=Image.new(mode='RGB',size=(hauteur,largeur))
     for ligne in range(hauteur):
         for colonne in range(largeur):
-            tourne.putpixel((ligne,colonne),photo.getpixel((colonne,largeur-1-ligne)))
+            tourne.putpixel((ligne,colonne),img.getpixel((colonne,largeur-1-ligne)))
     return tourne
- 
+
 def rotation_directe(img):
-    hauteur,largeur=photo.size
+    hauteur,largeur=img.size
     tourne=Image.new(mode='RGB',size=(hauteur,largeur))
     for ligne in range(hauteur):
         for colonne in range(largeur):
-            tourne.putpixel((ligne,colonne),photo.getpixel((largeur-1-colonne,ligne)))
+            tourne.putpixel((ligne,colonne),img.getpixel((largeur-1-colonne,ligne)))
     return tourne
- 
+
 def rotation_indirecte_sp(img):
     hauteur,largeur=img.size
     for ligne in range(hauteur//2):
         for colonne in range(largeur//2):
             temp=img.getpixel((ligne,colonne))
-            photo.putpixel((ligne,colonne),photo.getpixel((colonne,largeur-1-ligne)))
-            photo.putpixel((colonne,largeur-1-ligne),photo.getpixel((largeur-1-ligne,largeur-1-colonne)))
-            photo.putpixel((largeur-1-ligne,largeur-1-colonne),photo.getpixel((largeur-1-colonne,ligne)))
-            photo.putpixel((largeur-1-colonne,ligne),temp)
+            img.putpixel((ligne,colonne),img.getpixel((colonne,largeur-1-ligne)))
+            img.putpixel((colonne,largeur-1-ligne),img.getpixel((largeur-1-ligne,largeur-1-colonne)))
+            img.putpixel((largeur-1-ligne,largeur-1-colonne),img.getpixel((largeur-1-colonne,ligne)))
+            img.putpixel((largeur-1-colonne,ligne),temp)
     return None
- 
+
 def rotation_directe_sp(img):
     hauteur,largeur=img.size
     for ligne in range(hauteur//2):
         for colonne in range(largeur//2):
             temp=img.getpixel((ligne,colonne))
-            
-            photo.putpixel((ligne,colonne),photo.getpixel((largeur-1-colonne,ligne)))
-            photo.putpixel((largeur-1-colonne,ligne),photo.getpixel((hauteur-1-ligne, largeur-1-colonne)))
-            photo.putpixel((hauteur-1-ligne, largeur-1-colonne),photo.getpixel((colonne,hauteur-1-ligne)))
-            photo.putpixel((colonne,hauteur-1-ligne),temp)
-    
-    #img.show()
+            img.putpixel((ligne,colonne),img.getpixel((largeur-1-colonne,ligne)))
+            img.putpixel((largeur-1-colonne,ligne),img.getpixel((largeur-1-ligne,largeur-1-colonne)))
+            img.putpixel((largeur-1-ligne,largeur-1-colonne),img.getpixel((colonne,largeur-1-ligne)))
+            img.putpixel((colonne,largeur-1-ligne),temp)
     return None
- 
-#photo.show()
-#rotation_indirecte_sp(photo)
-#rotation_directe_sp(photo)
-#photo.show()
 
-def rota_recurs(img):
-    h = img.size[0]//2
+def rotation_directe_recu(img):
+    h=img.size[0]//2
     if h>=1:
-        a = rota_recurs(img.crop((0, 0, h, h)))
-        b = rota_recurs(img.crop((0, h, h, 2*h)))
-        c = rota_recurs(img.crop((h,0,2*h,h)))
-        d = rota_recurs(img.crop((h,h,2*h,2*h)))
-        img.paste(a,(h, 0))
+        a=rotation_directe_recu(img.crop((0,0,h,h)))
+        b=rotation_directe_recu(img.crop((0,h,h,2*h)))
+        c=rotation_directe_recu(img.crop((h,0,2*h,h)))
+        d=rotation_directe_recu(img.crop((h,h,2*h,2*h)))
+        img.paste(a,(h,0))
         img.paste(b,(0,0))
         img.paste(c,(h,h))
         img.paste(d,(0,h))
     return img
-    
-def rotation_dire_recu_sp(img, h=0,g=0, taille= None):
-    if taille==None :
+
+def rotation_indirecte_recu_sp(img,h=0,g=0,taille=None):
+    if taille==None:
         taille=img.size[0]
-    if taille>= 1 :
+    if taille>=1:
         k=taille//2
-        rotation_dire_recu_sp(img,h,g,k)
-        rotation_dire_recu_sp(img,h,g+k,k)
-        rotation_dire_recu_sp(img,h+k,g,k)
-        rotation_dire_recu_sp(img,h+k,g+k,k)
+        rotation_indirecte_recu_sp(img,h,g,k)
+        rotation_indirecte_recu_sp(img,h,g+k,k)
+        rotation_indirecte_recu_sp(img,h+k,g,k)
+        rotation_indirecte_recu_sp(img,h+k,g+k,k)
         permutation_indirecte(img,h,g,taille)
     return None
-#rota_recurs(photo).show()
 
 def permutation_indirecte(img,h,g,taille):
-    k = taille//2
-    temp = img.crop((h,g,k+h,g+k))
-    img.paste(img.crop((h,g+k,h+k, g+2*k)), (h,g))
-    img.paste(img.crop((h,g+k,h+2*k, g+2*k)), (h,g+k))
-    img.paste(img.crop((h+k,g+k,h+2*k, g+2*k)), (h,g+k))
-    img.paste(temp, (h+k,g))
+    k=taille//2
+    temp=img.crop((h,g,h+k,g+k))
+    img.paste(img.crop((h,g+k,h+k,g+2*k)),(h,g))
+    img.paste(img.crop((h+k,g+k,h+2*k,g+2*k)),(h,g+k))
+    img.paste(img.crop((h+k,g,h+2*k,g+k)),(h+k,g+k))
+    img.paste(temp,(h+k,g))
     return None
     
-def permutation_directe(img,h,g,taille):
-    pass
+#def permutation_indirecte_px(img,h,g,taille):
+    
+def ajout_carre(img):
+    h,l=img.size
+    dim=l
+    if h>l:
+        dim=h
+    cpt=0
+    while 2**cpt<dim:
+        cpt+=1
+    fond=Image.new('RGB',(2**cpt,2**cpt),'red')
+    fond.paste(img,(0,0))
+    return fond
+
+def rotation_indirecte_gen(img):
+    l,h=img.size
+    if h!=l or h & (h-1)!=0:
+        img=ajout_carre(img)
+    dim=img.size[0]
+    rotation_indirecte_sp(img)
+    return img.crop((dim-h, 0, dim,l))
+
+photo=Image.open('Img/chien2.jpg')
+photo=rotation_indirecte_gen(photo)
+photo.show()
 
 """
 def f():
