@@ -22,11 +22,11 @@ def trouver_intrus(tab, g,d):
         - g et d sont des entiers multiples de 3.
     '''
     if g == d :
-        return ...
+        return tab[g]
     else : 
-        nombre_de_triplets = (d-g) // ...
+        nombre_de_triplets = (d-g) // 3
         indice = g + 3 * (nombre_de_triplets // 2)
-        if ... :
-            return ...
+        if tab[indice]==tab[indice+1] :
+            return trouver_intrus(tab,indice+1,d)
         else : 
-            return ... 
+            return trouver_intrus(tab,g,indice)

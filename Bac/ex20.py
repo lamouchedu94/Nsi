@@ -21,6 +21,10 @@ assert ajoute_dictionnaires({1: 5, 2: 7}, {2 : 2}) == {1: 5, 2: 9}
 
 from random import randint
 def nbre_coups():
+    """
+    Aucun paramètre
+    Renvoi : Nombre de lancers aléatoires nécessaires pour terminer le jeu.  
+    """
     n = 0
     cases_vues = [0]
     case_en_cours = 0
