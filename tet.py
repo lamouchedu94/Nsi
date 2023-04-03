@@ -1,6 +1,3 @@
-
-	
-
 '''
 Changement de base
 Auteurs : FOUILLOUX Jérémy, GRILIKHES Garance, CASSAN Paul, GODIN Paul
