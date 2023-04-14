@@ -88,6 +88,16 @@ def verif(tab) :
     if count == 3 :
         return (True, 2)
     
+    #Cas nul 
+    count = 0
+    for i in range(3):
+        for j in range(3) :
+            if tab[i][j] != 0 :
+                count += 1
+    if count == 9 :
+        return (True, 3)
+
+
     return (False,0) 
 
 while run:
@@ -116,11 +126,19 @@ while run:
                 
                 if val_verif[1] == 1 :
                     couleur = couleur_ronds
-                else :
+                elif val_verif[1] == 2 :
                     couleur = couleur_croix
+                else :
+                    couleur = (255,255,255)
+                     
                 
-                text_surface = font.render(f"le joueur {val_verif[1]} a gagné ! whaouuuu trop fort bg tu gères", False, couleur)
-                text_x,text_y = text_surface.get_size()
+                if val_verif[1] == 3 :
+                    text_surface = font.render(f"Partie nul ! whaouuuu (c'est pas fou fou)", False, couleur)
+                    text_x,text_y = text_surface.get_size()    
+                else :
+                    text_surface = font.render(f"le joueur {val_verif[1]} a gagné ! whaouuuu trop fort bg tu gères", False, couleur)
+                    text_x,text_y = text_surface.get_size()
+                
                 surf.blit(text_surface, (((larg_case*3)//2)-text_x//2,((larg_case*3)//2)-text_y//2))
                 pygame.display.flip()
                 time.sleep(3)
