@@ -186,11 +186,12 @@ def minimax(tab, joueur, profondeur, maxi=True):
     val_verif = verif(tab)
     
     if val_verif[0] and val_verif[1] == joueur :
-        return (100-profondeur, None)
-    if val_verif[0] and val_verif[1] != joueur :
-        return (-100+profondeur, None)
+        return (100+profondeur, None)
     if val_verif[0] and val_verif[1] == 3 or profondeur == 0 :
         return (0,None)
+    if val_verif[0] and val_verif[1] != joueur :
+        return (-100-profondeur, None)
+    
     
     if maxi :
         maximum = (-200, ())
@@ -198,9 +199,7 @@ def minimax(tab, joueur, profondeur, maxi=True):
             tab_c = copy.deepcopy(tab)
             tab_c[coup[0]][coup[1]] = joueur
             score = minimax(tab_c,joueur,profondeur-1,not maxi)
-            print(coup,score)
-            for t in tab :
-                print(t)
+            
             if score[0] > maximum[0] :
                 maximum = (score[0], coup)
         return maximum
@@ -244,24 +243,49 @@ def main(dim) :
                 run = False
 
             #partie IA 
-            if orloge % 2 != 0 and en_cours and indice[0]-1 == 1: 
+            """
+            if orloge % 2 != 0 and en_cours and indice[0]-1 != 0: 
                 val_verif = verif(tab)
                 if val_verif[1] != 3 and not val_verif[0] :
-                    score,coup = minimax(tab, indice[0]-1, 6,True)
+                    print(indice[1])
+                    if indice[0] == 1 :
+                        score,coup = minimax(tab, 2, 0,True)
+                        print("facile")
+                    elif indice[0] == 3 : 
+                        score,coup = minimax(tab, 2, 4,True)
+                        print("moyen")
+                    else :
+                        score,coup = minimax(tab, 2, 9,True)
+                        print('imp')
                     tab[coup[0]][coup[1]] = 2
                     g.draw(tab)
                     joueur = 1
                     orloge += 1
             
-            if orloge % 2 == 0 and en_cours and indice[1]-1 == 1:
+            if orloge % 2 == 0 and en_cours and indice[1]-1 != 0:
                 val_verif = verif(tab)
                 if val_verif[1] != 3 and not val_verif[0]:
-                    x,y = ia_facile(tab)
-                    tab[x][y] = 1
+                    if indice[1] == 2 :
+                        score, coup = minimax(tab, 1, 0,True)
+                        print("facile")
+                    elif indice[1] == 3 :
+                        score, coup = minimax(tab, 1, 4,True)
+                        print("moyen")
+                    else : 
+                        score, coup = minimax(tab, 1, 9,True)
+                        print('imp')
+                    tab[coup[0]][coup[1]] = 1
                     g.draw(tab)
                     joueur = 2
                     orloge += 1
-            
+            """
+            print(indice)
+            """
+            Joueur = 1
+            Facile = 2
+
+            """        
+
             #Partie Jeu
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if pygame.mouse.get_pressed() == (1,0,0):
@@ -306,6 +330,7 @@ def main(dim) :
                                 j1.draw(surf)
                                 j2.draw(surf)
                                 b3.draw(surf)
+            #2 3 0 
             
             #Partie Verification
             val_verif = verif(tab)
