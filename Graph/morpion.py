@@ -1,97 +1,26 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 17 10:26:17 2023
-
-@author: lmartin
-"""
-
 import pygame
 import random
 import copy
 
-def verif(tab) :
-    #cas vertical
-    count = 0
-    for i in range(3):
-        for ligne in tab :
-            if ligne[i] == 1 :
-                count += 1
-        if count == 3 :
-            return (True,1)
-        count = 0
-    for i in range(3):
-        for ligne in tab :
-            if ligne[i] == 2 :
-                count += 1
-        if count == 3 :
-            return (True,2)
-        count = 0
-
-    #cas horizontal
-    count = 0 
-    for i in range(3):
-        for j in range(3) :
-            if tab[i][j] == 1 :
-                count += 1
-        if count == 3 :
-            return (True, 1)
-        count = 0 
-    
-    count = 0
-    for i in range(3):
-        for j in range(3) :
-            if tab[i][j] == 2 :
-                count += 1 
-        if count == 3 :
-            return (True, 2)
-        count = 0
-    
-    #cas diagonales 
-    #polo est un petit caca    
-
-    count = 0
-    for i in range(3) :
-        if tab[i][i] == 1 :
-            count += 1 
-    if count == 3 :
-        return (True, 1)
-    
-    count = 0
-    for i in range(3) :
-        if tab[i][i] == 2 :
-            count += 1 
-    if count == 3 :
-        return (True, 2)
-
-    count = 0
-    ind = 0 
-    for i in range(2,-1,-1) :
-        if tab[i][ind] == 1 :
-            count += 1
-        ind += 1 
-    if count == 3 :
-        return (True, 1)
-
-    count = 0
-    ind = 0 
-    for i in range(2,-1,-1) :
-        if tab[i][ind] == 2 :
-            count += 1
-        ind += 1 
-    if count == 3 :
-        return (True, 2)
-    
-    #Cas nul 
-    count = 0
-    for i in range(3):
-        for j in range(3) :
-            if tab[i][j] != 0 :
-                count += 1
-    if count == 9 :
+def verif(tab):
+    for j in range(3):
+        # tu verif les horizontaux
+        if tab[j][0] == tab[j][1] == tab[j][2] != 0:
+            return (True, tab[j][0])
+        #verticaux
+        if tab[0][j] == tab[1][j] == tab[2][j] != 0:
+            return (True, tab[0][j])
+    #diagonal1
+    if tab[0][0] == tab[1][1] == tab[2][2] != 0:
+        return (True, tab[0][0])
+    #diago 2
+    if tab[0][2] == tab[1][1] == tab[2][0] != 0:
+        return (True, tab[0][2])
+    #verif du tout
+    if all(tab[i][j] != 0 for i in range(3) for j in range(3)):
         return (True, 3)
-
-
-    return (False,0) 
+    #ni alignement ni win
+    return (False, 0)
 
 class Bouton:
     def __init__(self,position,dimensions,couleurfond,texte,couleurtexte):
@@ -174,7 +103,7 @@ def coups_possibles(tab):
             res.append((i,j))
     return res 
 
-def ia_facile(tab):
+def au_pif(tab):
     cond = True
     while cond :
         x, y = random.randint(0,2), random.randint(0,2)
@@ -236,7 +165,7 @@ def main(dim) :
     texte_j2 = ["Joueur 2","Facile","Medium","Impossible"]
     texte_b3 = ["Recommencer","Commencer"]
     indice = [1,1,0]
-    orloge = 1
+    orloge = 0
     while run :
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -244,47 +173,40 @@ def main(dim) :
 
             #partie IA 
             """
-            if orloge % 2 != 0 and en_cours and indice[0]-1 != 0: 
-                val_verif = verif(tab)
-                if val_verif[1] != 3 and not val_verif[0] :
-                    print(indice[1])
-                    if indice[0] == 1 :
-                        score,coup = minimax(tab, 2, 0,True)
-                        print("facile")
-                    elif indice[0] == 3 : 
-                        score,coup = minimax(tab, 2, 4,True)
-                        print("moyen")
-                    else :
-                        score,coup = minimax(tab, 2, 9,True)
-                        print('imp')
-                    tab[coup[0]][coup[1]] = 2
-                    g.draw(tab)
-                    joueur = 1
-                    orloge += 1
-            
-            if orloge % 2 == 0 and en_cours and indice[1]-1 != 0:
-                val_verif = verif(tab)
-                if val_verif[1] != 3 and not val_verif[0]:
-                    if indice[1] == 2 :
-                        score, coup = minimax(tab, 1, 0,True)
-                        print("facile")
-                    elif indice[1] == 3 :
-                        score, coup = minimax(tab, 1, 4,True)
-                        print("moyen")
-                    else : 
-                        score, coup = minimax(tab, 1, 9,True)
-                        print('imp')
-                    tab[coup[0]][coup[1]] = 1
-                    g.draw(tab)
-                    joueur = 2
-                    orloge += 1
-            """
-            print(indice)
-            """
             Joueur = 1
             Facile = 2
-
+            Medium = 3
+            Impossible = 0 
             """        
+            if orloge % 2 == 0 and en_cours and indice[0] != 1 :
+                if indice[0] == 0 :
+                    score, coup = minimax(tab,1, 8, True)
+                elif indice[0] == 2 :
+                    score, coup = minimax(tab,1,2, True)
+                else : 
+                    indice[0] == 3 
+                    score, coup = minimax(tab,1,4,True)
+                if coup == None :
+                    coup = au_pif(tab)
+                tab[coup[0]][coup[1]] = 1
+                g.draw(tab)
+                joueur = 2
+                orloge += 1
+
+            if orloge % 2 == 1 and en_cours and indice[1] != 1 :
+                if indice[1] == 0 :
+                    score, coup = minimax(tab,2, 8, True)
+                elif indice[1] == 2 :
+                    score, coup = minimax(tab,2,2, True)
+                else : 
+                    indice[1] == 3 
+                    score, coup = minimax(tab,2,4,True)
+                if coup == None :
+                    coup = au_pif(tab)
+                tab[coup[0]][coup[1]] = 2
+                g.draw(tab)
+                joueur = 1
+                orloge += 1
 
             #Partie Jeu
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -330,14 +252,14 @@ def main(dim) :
                                 j1.draw(surf)
                                 j2.draw(surf)
                                 b3.draw(surf)
-            #2 3 0 
             
             #Partie Verification
             val_verif = verif(tab)
             if val_verif[0] :
                 couleurs = [(237,28,28),(39,117,238), (255,255,255)]
                 en_cours = False
-                
+                orloge = 0
+                joueur = 1
                 if val_verif[1] != 3 :
                     zone_aff.set_couleur((0,0,0), couleurs[val_verif[1]-1])
                     zone_aff.set_texte(f"Le joueur {val_verif[1]} a gagné")
