@@ -182,25 +182,38 @@ def ia_facile(tab):
             cond = False
     return (x,y)
 
-def ia_difficile(tab, joueur,profondeur, bool, nb):
-    if verif(tab)[1] == 3 :
-        return 0
-    elif joueur == 1 and verif(tab)[1] == 1 :
-        return 100
-    elif joueur == 1 and verif(tab)[1] == 2:
-        return -100
+def minimax(tab, joueur, profondeur, maxi=True):
+    val_verif = verif(tab)
     
-    pos = coups_possibles(tab)
+    if val_verif[0] and val_verif[1] == joueur :
+        return (100-profondeur, None)
+    if val_verif[0] and val_verif[1] != joueur :
+        return (-100+profondeur, None)
+    if val_verif[0] and val_verif[1] == 3 or profondeur == 0 :
+        return (0,None)
     
-    if bool :
-        tab[pos[nb][0]][pos[nb][1]] = 2
-        return 0 + ia_difficile(tab, 2, 0, False, nb - 1)
+    if maxi :
+        maximum = (-200, ())
+        for coup in coups_possibles(tab) :
+            tab_c = copy.deepcopy(tab)
+            tab_c[coup[0]][coup[1]] = joueur
+            score = minimax(tab_c,joueur,profondeur-1,not maxi)
+            print(coup,score)
+            for t in tab :
+                print(t)
+            if score[0] > maximum[0] :
+                maximum = (score[0], coup)
+        return maximum
+
     else :
-        tab[pos[nb][0]][pos[nb][1]] = 1
-        return 0 + ia_difficile(tab, 1, 0, True, nb - 1)
-tab = [[1,0,0],[0,2,0],[1,0,0]]
-print(ia_difficile(tab,2,0,True,len(coups_possibles(tab))-1))    
-print(tab)
+        minimum = (200, ())
+        for coup in coups_possibles(tab) :
+            tab_c = copy.deepcopy(tab)
+            tab_c[coup[0]][coup[1]] = joueur*-1+3 
+            score = minimax(tab_c,joueur,profondeur-1,not maxi)
+            if score[0] < minimum[0] :
+                minimum = (score[0], coup)
+        return minimum
 
 
 def main(dim) :
@@ -224,7 +237,7 @@ def main(dim) :
     texte_j2 = ["Joueur 2","Facile","Medium","Impossible"]
     texte_b3 = ["Recommencer","Commencer"]
     indice = [1,1,0]
-    orloge = 0
+    orloge = 1
     while run :
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -234,8 +247,8 @@ def main(dim) :
             if orloge % 2 != 0 and en_cours and indice[0]-1 == 1: 
                 val_verif = verif(tab)
                 if val_verif[1] != 3 and not val_verif[0] :
-                    x,y = ia_facile(tab)
-                    tab[x][y] = 2
+                    score,coup = minimax(tab, indice[0]-1, 6,True)
+                    tab[coup[0]][coup[1]] = 2
                     g.draw(tab)
                     joueur = 1
                     orloge += 1
@@ -321,4 +334,4 @@ def main(dim) :
 
             pygame.display.flip()
 pygame.quit()
-#main(150)
+main(150)
