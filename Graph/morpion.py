@@ -4,22 +4,22 @@ import copy
 
 def verif(tab):
     for j in range(3):
-        # tu verif les horizontaux
+        #horizontaux
         if tab[j][0] == tab[j][1] == tab[j][2] != 0:
             return (True, tab[j][0])
         #verticaux
         if tab[0][j] == tab[1][j] == tab[2][j] != 0:
             return (True, tab[0][j])
-    #diagonal1
+    #diagonale 1
     if tab[0][0] == tab[1][1] == tab[2][2] != 0:
         return (True, tab[0][0])
-    #diago 2
+    #diagonale 2
     if tab[0][2] == tab[1][1] == tab[2][0] != 0:
         return (True, tab[0][2])
-    #verif du tout
+    #Cas nul
     if all(tab[i][j] != 0 for i in range(3) for j in range(3)):
         return (True, 3)
-    #ni alignement ni win
+    
     return (False, 0)
 
 class Bouton:
