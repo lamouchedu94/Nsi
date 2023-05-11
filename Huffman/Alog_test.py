@@ -16,7 +16,7 @@ class Noeud :
         self.droite = droite
         self.lettre = lettre
 
-chaine = "this is an example of a huffman tree"
+chaine = "Le codage de Huffman est un algorithme de compression de données sans perte. Le codage de Huffman utilise un code à longueur variable pour représenter un symbole de la source (par exemple un caractère dans un fichier). Le code est déterminé à partir d'une estimation des probabilités d'apparition des symboles de source, un code court étant associé aux symboles de source les plus fréquents. "
 dico = occurence(chaine)
 
 def tri(dico) :
@@ -87,5 +87,5 @@ def decode(codee, dico) :
 
 print(decode(codee,dico))
 
-
+print(len(codee)/(len(chaine)*8)*100,"%")
 
