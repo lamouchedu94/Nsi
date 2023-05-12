@@ -9,13 +9,6 @@ def occurence(chaine) :
     return dico
 print(occurence("aaabccdeeeee"))
 
-class Noeud :
-    def __init__(self, frequence, gauche, droite, lettre) :
-        self.frequence = frequence
-        self.gauche = gauche
-        self.droite = droite
-        self.lettre = lettre
-
 chaine = "Le codage de Huffman est un algorithme de compression de données sans perte. Le codage de Huffman utilise un code à longueur variable pour représenter un symbole de la source (par exemple un caractère dans un fichier). Le code est déterminé à partir d'une estimation des probabilités d'apparition des symboles de source, un code court étant associé aux symboles de source les plus fréquents. "
 dico = occurence(chaine)
 
@@ -74,7 +67,7 @@ def encode(tab) :
         codee += res[car]
     return codee, res
 codee, dico = encode(tab)
-print(codee)
+#print(codee)
 
 def decode(codee, dico) :
     enclair = ""
@@ -87,5 +80,5 @@ def decode(codee, dico) :
 
 print(decode(codee,dico))
 
-print(len(codee)/(len(chaine)*8)*100,"%")
+print(100-len(codee)/(len(chaine)*8)*100,"%")
 
