@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
 class Triplet :
     def __init__(self, score, mot1, mot2) :
         self.score = score
