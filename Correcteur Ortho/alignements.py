@@ -55,9 +55,11 @@ def alignement2(mot1, mot2, dico=None) :
     if not (mot1[:-1],mot2[:-1]) in dico:
         dico[(mot1[:-1],mot2[:-1])] =  alignement2(mot1[:-1],mot2[:-1],dico)
     v1 = dico[(mot1[:-1],mot2[:-1])]
+    
     if not (mot1[:-1],mot2) in dico:
         dico[(mot1[:-1],mot2)] = alignement2(mot1[:-1],mot2,dico)
     v2 = dico[(mot1[:-1],mot2)]
+    
     if not (mot1,mot2[:-1]) in dico:
         dico[(mot1,mot2[:-1])] = alignement2(mot1,mot2[:-1],dico)
     v3 = dico[(mot1,mot2[:-1])]
