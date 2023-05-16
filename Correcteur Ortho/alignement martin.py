@@ -38,3 +38,4 @@ def score_mot(mot1,mot2):
 
 chaine1 = 'je suis en train de tester pour voir si ca va vite'
 chaine2 = 'et j espere que ca va marcher parce que je l ai bien code'
+score_mot(chaine1,chaine2)
