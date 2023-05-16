@@ -46,9 +46,9 @@ def alignement2(mot1, mot2, dico=None) :
     if dico == None : 
         dico = {}
     if len(mot1) == 0:
-        return -len(mot2),'-'*len(mot2),mot2
+        return -len(mot2),'_'*len(mot2),mot2
     if len(mot2) == 0:
-        return -len(mot1),mot1,'-'*len(mot1)
+        return -len(mot1),mot1,'_'*len(mot1)
     score = 1 
     if mot1[-1] != mot2[-1]:
         score = -1
@@ -71,7 +71,7 @@ def alignement2(mot1, mot2, dico=None) :
     if maxi == 1:
         return v1[0]+score , v1[1]+mot1[-1] , v1[2]+mot2[-1]
     elif maxi == 2:
-        return v2[0]-1,v2[1]+mot1[-1], v2[2]+'-'
-    return v3[0]-1, v3[1]+'-', v3[2]+mot2[-1]
+        return v2[0]-1,v2[1]+mot1[-1], v2[2]+'_'
+    return v3[0]-1, v3[1]+'_', v3[2]+mot2[-1]
 
 print(alignement2("enorme","genome"))
