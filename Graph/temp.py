@@ -38,6 +38,7 @@ g.ajouter_arc(2,3)
 g.ajouter_arc(1,2)
 print(g)
 print(g.voisins(0))
+print("ici")
 
 class Graphe_mat_non_orient :
     def __init__(self,n) :
@@ -107,20 +108,37 @@ class Graphe_adj:
                     break
             self.graphe[s1].pop(pos)
         return None
+    
+    def voisins(self, s) :
+        res = []
+        for i in range(self.n) :
+            if self.arc_entre(s,i):
+                res.append(i)
+        return res
+    
+    def profondeur(self,s,tab=None):
+        if tab == None : 
+            tab = []
+        if s not in tab :
+            tab.append(s)
+        pas_vu = [i for i in self.graphe[s] if i not in tab]
+        for v in pas_vu : 
+            self.profondeur(v, tab)
+        return tab
+
+
+
     def __str__(self):
         return str(self.graphe)
 
-test=Graphe_adj(0)
-test.ajouter_arc("a","b")
-test.ajouter_arc("a","e")
-test.ajouter_arc("b","c")
-test.ajouter_arc("c","d")
-test.ajouter_arc("d","a")
-
-
+test=Graphe_adj(4)
+test.ajouter_arc(0,2)
+test.ajouter_arc(0,3)
+test.ajouter_arc(1,0)
+test.ajouter_arc(2,0)
+test.ajouter_arc(2,3)
+test.ajouter_arc(1,2)
 
 print(test)
-print(test.arc_entre("a", "c"))
-print(test.suppr_arc("a", "b"))
-print(test)
-    
+print(test.voisins(1))
+print(test.profondeur(1))
