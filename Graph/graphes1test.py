@@ -132,7 +132,7 @@ class Graphe_adj:
     
     def largeur(self,s):
         """s est un sommet du graphe"""
-        file=[(s,0)]
+        file=[s]
         parcours=[]
         distances = {}  
         while file!=[]:
@@ -140,20 +140,20 @@ class Graphe_adj:
             parcours.append(encours)
             distances[s] = 0  
             dist = 0
-            for sommet in self.voisins(encours[0]):
+            for sommet in self.voisins(encours):
                 # Pas dans parcours
                 est_dans_parcours = False
                 for a in parcours : 
-                    if sommet == a[0] :
+                    if sommet == a :
                         est_dans_parcours = True
                 est_dans_file = False
                 for a in file :
-                    if sommet == a[0] :
+                    if sommet == a :
                         est_dans_parcours = True
                 
                 if not est_dans_parcours and not est_dans_file:
-                    file.append((sommet,dist))
-                    distances[sommet] = distances[encours[0]] + 1
+                    file.append(sommet)
+                    distances[sommet] = distances[encours] + 1
             
             
         return parcours, distances
