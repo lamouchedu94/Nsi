@@ -139,7 +139,6 @@ class Graphe_adj:
             encours=file.pop(0)
             parcours.append(encours)
             distances[s] = 0  
-            dist = 0
             for sommet in self.voisins(encours):
                 if sommet not in parcours and sommet not in file:
                     file.append(sommet)
