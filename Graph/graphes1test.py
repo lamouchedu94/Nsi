@@ -141,17 +141,7 @@ class Graphe_adj:
             distances[s] = 0  
             dist = 0
             for sommet in self.voisins(encours):
-                # Pas dans parcours
-                est_dans_parcours = False
-                for a in parcours : 
-                    if sommet == a :
-                        est_dans_parcours = True
-                est_dans_file = False
-                for a in file :
-                    if sommet == a :
-                        est_dans_parcours = True
-                
-                if not est_dans_parcours and not est_dans_file:
+                if sommet not in parcours and sommet not in file:
                     file.append(sommet)
                     distances[sommet] = distances[encours] + 1
             
