@@ -163,14 +163,17 @@ class Graphe_adj:
         # 0 pas vu
         # 1 en cours
         # 2 traité
-        pile=[(s, 1)]
+        pile=[s]
+        traite = {s:1}
         parcours=[]
         while pile!=[]:
             encours=pile.pop(-1)
-            parcours.append(encours[0])
-            for sommet in self.voisins(encours[0]):
+            parcours.append(encours)
+            traite[encours] = 2
+            for sommet in self.voisins(encours):
                 if sommet not in parcours and sommet not in pile:
-                    pile.append((sommet,1))
+                    pile.append(sommet)
+                    traite[sommet] = 1 
             
         return parcours                
     
