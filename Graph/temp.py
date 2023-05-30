@@ -103,7 +103,7 @@ class Graphe_adj:
         if s2 in self.graphe[s1] :
             pos = 0
             for i in range(len(self.graphe[s1])):
-                if self.graphe[s1] == s2 :
+                if self.graphe[s1][i] == s2 :
                     pos=i
                     break
             self.graphe[s1].pop(pos)
@@ -142,3 +142,5 @@ test.ajouter_arc(1,2)
 print(test)
 print(test.voisins(1))
 print(test.profondeur(1))
+test.suppr_arc(2,3)
+print(test)

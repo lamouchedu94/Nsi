@@ -159,8 +159,20 @@ class Graphe_adj:
                     pile.append(sommet)
         return parcours                
                 
+    def profondeur_avec_boucle(self, s) :     
+        # 0 pas vu
+        # 1 en cours
+        # 2 traité
+        pile=[(s, 1)]
+        parcours=[]
+        while pile!=[]:
+            encours=pile.pop(-1)
+            parcours.append(encours[0])
+            for sommet in self.voisins(encours[0]):
+                if sommet not in parcours and sommet not in pile:
+                    pile.append((sommet,1))
             
-
+        return parcours                
     
 
     def __str__(self):
@@ -186,5 +198,6 @@ test.ajouter_arc(6,5)
 test.ajouter_arc(7,5)
 #print(test)
 #print(test.voisins(1))
-print(test.largeur(1))
+#print(test.largeur(1))
 #print(test.profondeur(1))
+print(test.profondeur_avec_boucle(1))
